@@ -207,7 +207,7 @@ export function Hero() {
                 <a
                   href="#contact"
                   className="text-[12px] font-semibold uppercase tracking-[0.3em] transition-colors hover:text-[var(--color-gold-bright)]"
-                  style={{ color: "var(--color-gold)" }}
+                  style={{ color: "#000000" }}
                 >
                   Begin a Conversation →
                 </a>
