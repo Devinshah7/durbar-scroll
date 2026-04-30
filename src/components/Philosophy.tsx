@@ -23,9 +23,9 @@ export function Philosophy() {
 
     const trig = ScrollTrigger.create({
       trigger: "#philosophy",
-      start: "top 80%",
-      end: "bottom center",
-      scrub: 1.5,
+      start: "top 90%",
+      end: "top 20%",
+      scrub: 1,
       onUpdate: (self) => {
         const progress = self.progress;
         paths.forEach((p) => {
