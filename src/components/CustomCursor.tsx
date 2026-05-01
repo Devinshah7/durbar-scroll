@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { gsap } from "gsap";
 
-/** Site-wide custom cursor: gold dot follows instantly, ring lags. */
+/** Site-wide custom cursor with diya flame ember trail. */
 export function CustomCursor() {
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -11,17 +11,64 @@ export function CustomCursor() {
     const ring = document.querySelector<HTMLDivElement>(".cursor-ring");
     if (!dot || !ring) return;
 
+    // Create trail embers
+    const TRAIL_COUNT = 5;
+    const trails: HTMLDivElement[] = [];
+    for (let i = 0; i < TRAIL_COUNT; i++) {
+      const t = document.createElement("div");
+      t.className = "cursor-trail";
+      t.style.cssText = `
+        position: fixed;
+        width: ${4 - i * 0.5}px;
+        height: ${4 - i * 0.5}px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--color-gold-bright), var(--color-gold));
+        pointer-events: none;
+        z-index: 99997;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 4px var(--color-gold-bright);
+        transition: opacity 0.15s;
+      `;
+      document.body.appendChild(t);
+      trails.push(t);
+    }
+
     const setDotX = gsap.quickSetter(dot, "x", "px");
     const setDotY = gsap.quickSetter(dot, "y", "px");
     const moveRingX = gsap.quickTo(ring, "x", { duration: 0.18, ease: "power2.out" });
     const moveRingY = gsap.quickTo(ring, "y", { duration: 0.18, ease: "power2.out" });
+
+    const positions: { x: number; y: number }[] = [];
 
     const onMove = (e: MouseEvent) => {
       setDotX(e.clientX);
       setDotY(e.clientY);
       moveRingX(e.clientX);
       moveRingY(e.clientY);
+
+      // Trail history
+      positions.unshift({ x: e.clientX, y: e.clientY });
+      if (positions.length > 20) positions.length = 20;
     };
+
+    // Animate trails
+    let raf: number;
+    function animateTrails() {
+      trails.forEach((t, i) => {
+        const idx = (i + 1) * 3;
+        const pos = positions[idx];
+        if (pos) {
+          t.style.left = pos.x + "px";
+          t.style.top = pos.y + "px";
+          t.style.opacity = String(0.5 - i * 0.1);
+        }
+      });
+      raf = requestAnimationFrame(animateTrails);
+    }
+    animateTrails();
 
     const onEnter = () => {
       gsap.to(ring, {
@@ -60,7 +107,9 @@ export function CustomCursor() {
 
     return () => {
       window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(raf);
       observer.disconnect();
+      trails.forEach((t) => t.remove());
     };
   }, []);
 
