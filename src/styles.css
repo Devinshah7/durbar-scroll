@@ -534,3 +534,52 @@
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-up { animation: fade-up 0.8s ease-out both; }
+
+/* ============================================================
+   SECTION TRANSITIONS — golden wipe overlays
+   ============================================================ */
+section {
+  position: relative;
+}
+section::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--color-ink));
+  pointer-events: none;
+  z-index: 5;
+}
+section::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 10%, var(--color-gold) 50%, transparent 90%);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ============================================================
+   SPINNING LOTUS (loading fallback)
+   ============================================================ */
+@keyframes lotus-spin {
+  to { transform: rotate(360deg); }
+}
+.lotus-spinner {
+  width: 32px;
+  height: 32px;
+  animation: lotus-spin 2s linear infinite;
+}
+
+/* ============================================================
+   CURSOR TRAIL EMBERS
+   ============================================================ */
+.cursor-trail {
+  will-change: left, top, opacity;
+}
