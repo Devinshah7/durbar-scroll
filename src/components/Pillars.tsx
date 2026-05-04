@@ -1,462 +1,500 @@
-import { useEffect, useRef } from "react";
+import { Suspense, useRef, useMemo, useEffect, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Environment, Stars, Text, Html } from "@react-three/drei";
+import {
+  EffectComposer,
+  Bloom,
+  Vignette,
+} from "@react-three/postprocessing";
+import * as THREE from "three";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
-
-interface PillarData {
-  num: string;
-  label: string;
-  title: string;
-  desc: string;
-  bullets: string[];
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-const PILLARS_DATA: PillarData[] = [
-  {
-    num: "01",
-    label: "EVENTS",
-    title: "Corporate Events & Live Experiences",
-    desc: "From boardroom conclaves to packed arenas — events that move people.",
-    bullets: ["Corporate Conclaves", "Product Launches", "Celebrity Concerts"],
-  },
-  {
-    num: "02",
-    label: "SPORTS",
-    title: "Sports Management & Activations",
-    desc: "Powering sporting spectacles with precision and cultural flair.",
-    bullets: ["Sports Events", "Athlete Management", "Brand Activations"],
-  },
-  {
-    num: "03",
-    label: "TOURISM",
-    title: "MICE & Experiential Travel",
-    desc: "Journeys that balance business with discovery — immersive and enriching.",
-    bullets: ["MICE Travel", "Incentive Tours", "Heritage Journeys"],
-  },
-  {
-    num: "04",
-    label: "CULTURE",
-    title: "Culture Embedded, Not Decorated",
-    desc: "Culture built into the architecture of every experience.",
-    bullets: ["Cultural Curation", "Artistry Workshops", "Exhibitions"],
-  },
-];
+const PILLAR_LABELS = ["EVENTS", "TOURISM", "CULTURE", "CELEBRITIES"];
+const PILLAR_X = [-4.5, -1.5, 1.5, 4.5];
 
+const PILLAR_DETAILS: Record<string, string[]> = {
+  EVENTS: ["Corporate Galas", "Cultural Festivals", "Grand Weddings"],
+  TOURISM: ["Heritage Tours", "MICE Travel", "Luxury Retreats"],
+  CULTURE: ["Folk Art Revival", "Sacred Journeys", "Artisan Showcases"],
+  CELEBRITIES: ["Brand Partnerships", "Talent Management", "Star Experiences"],
+};
+
+/* ------------------------------------------------------------------ */
+/*  Single Dravidian pillar                                            */
+/* ------------------------------------------------------------------ */
+function DravidianPillar({
+  x,
+  label,
+  progress,
+  index,
+}: {
+  x: number;
+  label: string;
+  progress: number;
+  index: number;
+}) {
+  const groupRef = useRef<THREE.Group>(null);
+  const [hovered, setHovered] = useState(false);
+
+  // Stagger: each pillar starts at different scroll progress
+  const start = 0.1 + index * 0.125;
+  const end = start + 0.12;
+  const pillarProgress = Math.min(1, Math.max(0, (progress - start) / (end - start)));
+  const scaleY = THREE.MathUtils.lerp(0.001, 1, easeOutCubic(pillarProgress));
+  const labelOpacity = pillarProgress > 0.8 ? (pillarProgress - 0.8) / 0.2 : 0;
+
+  // Sandstone material
+  const sandstone = useMemo(
+    () =>
+      new THREE.MeshStandardMaterial({
+        color: new THREE.Color("#c8a97e"),
+        roughness: 0.85,
+        metalness: 0,
+      }),
+    [],
+  );
+
+  const darkSandstone = useMemo(
+    () =>
+      new THREE.MeshStandardMaterial({
+        color: new THREE.Color("#a88a60"),
+        roughness: 0.9,
+        metalness: 0,
+      }),
+    [],
+  );
+
+  const goldMat = useMemo(
+    () =>
+      new THREE.MeshStandardMaterial({
+        color: new THREE.Color("#d4af37"),
+        metalness: 0.9,
+        roughness: 0.3,
+        emissive: new THREE.Color("#d4af37"),
+        emissiveIntensity: 0.2,
+      }),
+    [],
+  );
+
+  // Hover effect
+  useFrame(() => {
+    if (!groupRef.current) return;
+    const targetEmissive = hovered ? 0.4 : 0;
+    sandstone.emissiveIntensity = THREE.MathUtils.lerp(
+      sandstone.emissiveIntensity,
+      targetEmissive,
+      0.1,
+    );
+    sandstone.emissive = new THREE.Color("#ffaa00");
+    const targetScale = hovered ? 1.02 : 1;
+    groupRef.current.scale.x = THREE.MathUtils.lerp(groupRef.current.scale.x, targetScale, 0.1);
+    groupRef.current.scale.z = THREE.MathUtils.lerp(groupRef.current.scale.z, targetScale, 0.1);
+  });
+
+  return (
+    <group
+      ref={groupRef}
+      position={[x, -2, 0]}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+    >
+      {/* Scale from bottom */}
+      <group scale={[1, scaleY, 1]}>
+        {/* Plinth base */}
+        <mesh position={[0, 0.15, 0]} material={darkSandstone} castShadow>
+          <boxGeometry args={[1.2, 0.3, 1.2]} />
+        </mesh>
+        <mesh position={[0, 0.4, 0]} material={darkSandstone} castShadow>
+          <boxGeometry args={[0.95, 0.2, 0.95]} />
+        </mesh>
+
+        {/* Column shaft */}
+        <mesh position={[0, 3, 0]} material={sandstone} castShadow>
+          <cylinderGeometry args={[0.35, 0.4, 4.8, 32, 1, false]} />
+        </mesh>
+
+        {/* Capital — torus ring */}
+        <mesh position={[0, 5.5, 0]} material={sandstone} castShadow>
+          <torusGeometry args={[0.42, 0.08, 16, 64]} />
+        </mesh>
+
+        {/* Capital — top abacus */}
+        <mesh position={[0, 5.7, 0]} material={darkSandstone} castShadow>
+          <boxGeometry args={[1, 0.15, 1]} />
+        </mesh>
+
+        {/* Carved label */}
+        <Text
+          position={[0, 3, 0.42]}
+          fontSize={0.22}
+          font="https://fonts.gstatic.com/s/cinzel/v23/8vIU7ww63mVu7gtR-kwKxNvkNOjw-tbnfY3lCA.woff2"
+          color="#d4af37"
+          anchorX="center"
+          anchorY="middle"
+          material={goldMat}
+          fillOpacity={labelOpacity}
+        >
+          {label}
+        </Text>
+      </group>
+
+      {/* Dust particles (when rising) */}
+      {pillarProgress > 0.01 && pillarProgress < 0.95 && (
+        <DustBurst x={0} progress={pillarProgress} />
+      )}
+
+      {/* Diya light at base after risen */}
+      {pillarProgress > 0.9 && (
+        <pointLight
+          position={[0, 0.5, 0.6]}
+          color="#ff7a3a"
+          intensity={0.8 * ((pillarProgress - 0.9) / 0.1)}
+          distance={4}
+        />
+      )}
+
+      {/* Hover tooltip */}
+      {hovered && pillarProgress > 0.95 && (
+        <Html position={[0, 6.5, 0]} center transform={false}>
+          <div
+            className="pointer-events-none rounded-sm border px-4 py-3 text-center"
+            style={{
+              background: "rgba(26, 10, 10, 0.9)",
+              borderColor: "#d4af37",
+              minWidth: 160,
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            <div
+              className="mb-1 text-xs font-bold tracking-[0.2em]"
+              style={{ color: "#d4af37", fontFamily: "'Cinzel', serif" }}
+            >
+              {label}
+            </div>
+            {PILLAR_DETAILS[label]?.map((item) => (
+              <div
+                key={item}
+                className="text-[10px]"
+                style={{ color: "#f5e9d0" }}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        </Html>
+      )}
+    </group>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Dust particles                                                     */
+/* ------------------------------------------------------------------ */
+function DustBurst({ x, progress }: { x: number; progress: number }) {
+  const ref = useRef<THREE.Points>(null);
+  const count = 40;
+
+  const positions = useMemo(() => {
+    const arr = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      arr[i * 3] = (Math.random() - 0.5) * 1.5;
+      arr[i * 3 + 1] = Math.random() * 0.5;
+      arr[i * 3 + 2] = (Math.random() - 0.5) * 1.5;
+    }
+    return arr;
+  }, []);
+
+  useFrame((_, delta) => {
+    if (!ref.current) return;
+    const posAttr = ref.current.geometry.getAttribute("position") as THREE.BufferAttribute;
+    const arr = posAttr.array as Float32Array;
+    for (let i = 0; i < count; i++) {
+      arr[i * 3 + 1] += delta * 0.5;
+      arr[i * 3] += (Math.random() - 0.5) * delta * 0.3;
+    }
+    posAttr.needsUpdate = true;
+    ref.current.material.opacity = Math.max(0, 1 - progress);
+  });
+
+  return (
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} count={count} />
+      </bufferGeometry>
+      <pointsMaterial
+        color="#c4a47a"
+        size={0.05}
+        transparent
+        opacity={0.6}
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+        sizeAttenuation
+      />
+    </points>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Gopuram roof                                                       */
+/* ------------------------------------------------------------------ */
+function GopuramRoof({ progress }: { progress: number }) {
+  const roofProgress = Math.min(1, Math.max(0, (progress - 0.6) / 0.15));
+  const eased = easeElasticOut(roofProgress);
+  const posY = THREE.MathUtils.lerp(12, 5.8, eased);
+  const scaleX = THREE.MathUtils.lerp(0.01, 1, eased);
+
+  const sandstone = useMemo(
+    () =>
+      new THREE.MeshStandardMaterial({
+        color: new THREE.Color("#b89468"),
+        roughness: 0.85,
+        metalness: 0,
+      }),
+    [],
+  );
+
+  // Diya flame flicker
+  const flameRef = useRef<THREE.PointLight>(null);
+  useFrame((state) => {
+    if (flameRef.current && roofProgress > 0.8) {
+      const t = state.clock.elapsedTime;
+      flameRef.current.intensity = 1.5 + Math.sin(t * 8) * 0.3 + Math.random() * 0.1;
+    }
+  });
+
+  if (roofProgress <= 0) return null;
+
+  return (
+    <group position={[0, posY, 0]} scale={[scaleX, 1, 1]}>
+      {/* Central lintel beam */}
+      <mesh material={sandstone} castShadow>
+        <boxGeometry args={[12, 0.3, 1.2]} />
+      </mesh>
+
+      {/* Pyramidal top */}
+      <mesh position={[0, 0.8, 0]} material={sandstone} castShadow>
+        <coneGeometry args={[2, 1.5, 4]} />
+      </mesh>
+
+      {/* Apex diya flame light */}
+      {roofProgress > 0.8 && (
+        <>
+          <pointLight
+            ref={flameRef}
+            position={[0, 2, 0]}
+            color="#ff9933"
+            intensity={1.5}
+            distance={8}
+          />
+          {/* Flame cone */}
+          <mesh position={[0, 1.8, 0]}>
+            <coneGeometry args={[0.08, 0.3, 8]} />
+            <meshBasicMaterial color="#ffd27a" transparent opacity={0.9} />
+          </mesh>
+        </>
+      )}
+    </group>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  The floor                                                          */
+/* ------------------------------------------------------------------ */
+function TempleFloor({ progress }: { progress: number }) {
+  const opacity = Math.min(1, progress / 0.1);
+
+  return (
+    <mesh
+      rotation={[-Math.PI / 2, 0, 0]}
+      position={[0, -2, 0]}
+      receiveShadow
+    >
+      <planeGeometry args={[40, 20, 64, 64]} />
+      <meshStandardMaterial
+        color="#c8a97e"
+        roughness={0.9}
+        metalness={0}
+        transparent
+        opacity={opacity}
+      />
+    </mesh>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Main temple scene                                                  */
+/* ------------------------------------------------------------------ */
+function TempleScene({ scrollProgress }: { scrollProgress: number }) {
+  const { camera } = useThree();
+
+  // Camera movement
+  useFrame(() => {
+    if (scrollProgress > 0.75) {
+      const camProgress = (scrollProgress - 0.75) / 0.15;
+      camera.position.z = THREE.MathUtils.lerp(12, 9, Math.min(1, camProgress));
+      camera.position.y = THREE.MathUtils.lerp(2, 2.3, Math.min(1, camProgress));
+    }
+  });
+
+  const bloomIntensity = scrollProgress > 0.75
+    ? THREE.MathUtils.lerp(0.8, 1.6, Math.min(1, (scrollProgress - 0.75) / 0.15))
+    : 0.8;
+
+  return (
+    <>
+      <ambientLight intensity={0.4} color="#3a2845" />
+      <directionalLight
+        position={[3, 10, 4]}
+        intensity={1.8}
+        color="#ffd9a8"
+        castShadow
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+        shadow-bias={-0.0005}
+      />
+      <spotLight
+        position={[0, 12, 5]}
+        intensity={1.2}
+        angle={0.6}
+        penumbra={0.5}
+        color="#fff2dd"
+      />
+      <Environment preset="sunset" />
+      <Stars radius={80} depth={40} count={2000} factor={3} fade speed={0.5} />
+
+      <TempleFloor progress={scrollProgress} />
+
+      {PILLAR_LABELS.map((label, i) => (
+        <DravidianPillar
+          key={label}
+          x={PILLAR_X[i]}
+          label={label}
+          progress={scrollProgress}
+          index={i}
+        />
+      ))}
+
+      <GopuramRoof progress={scrollProgress} />
+
+      <EffectComposer>
+        <Bloom
+          intensity={bloomIntensity}
+          luminanceThreshold={0.4}
+          luminanceSmoothing={0.9}
+          mipmapBlur
+        />
+        <Vignette eskil={false} offset={0.1} darkness={0.8} />
+      </EffectComposer>
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Easing helpers                                                     */
+/* ------------------------------------------------------------------ */
+function easeOutCubic(t: number) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+function easeElasticOut(t: number) {
+  if (t === 0 || t === 1) return t;
+  const p = 0.5;
+  return Math.pow(2, -10 * t) * Math.sin(((t - p / 4) * (2 * Math.PI)) / p) + 1;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Exported component                                                 */
+/* ------------------------------------------------------------------ */
 export function Pillars() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [showTitle, setShowTitle] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const section = sectionRef.current;
     if (!section) return;
 
-    const ctx = gsap.context(() => {
-      const totalProgress = 5; // total scroll units
+    const st = ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "+=3000",
+      pin: true,
+      scrub: 1,
+      onUpdate: (self) => {
+        setScrollProgress(self.progress);
+        if (self.progress > 0.75) setShowTitle(true);
+      },
+    });
 
-      const st = ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        end: `+=${window.innerHeight * totalProgress}`,
-        scrub: 1.2,
-        pin: true,
-        anticipatePin: 1,
-      });
-
-      // Create a timeline driven by scroll
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: `+=${window.innerHeight * totalProgress}`,
-          scrub: 1.2,
-        },
-      });
-
-      // Build pillars one by one
-      PILLARS_DATA.forEach((_, i) => {
-        const delay = i * 0.15;
-
-        // Rise pillar
-        tl.fromTo(
-          `#temple-pillar-${i}`,
-          { scaleY: 0 },
-          { scaleY: 1, duration: 0.2, ease: "power3.out" },
-          delay,
-        );
-
-        // Dust burst
-        tl.fromTo(
-          `#dust-${i} .dust-particle`,
-          { opacity: 0.8, y: 0, x: 0, scale: 1 },
-          {
-            opacity: 0,
-            y: 30,
-            x: "random(-40, 40)",
-            scale: 0,
-            duration: 0.1,
-            stagger: 0.008,
-          },
-          delay + 0.18,
-        );
-
-        // Etch label via stroke-dashoffset
-        tl.fromTo(
-          `#pillar-label-${i}`,
-          { strokeDashoffset: 300 },
-          { strokeDashoffset: 0, duration: 0.12, ease: "none" },
-          delay + 0.15,
-        );
-
-        // Fade in description
-        tl.fromTo(
-          `#pillar-desc-${i}`,
-          { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.08 },
-          delay + 0.22,
-        );
-      });
-
-      // Roof appears after all pillars
-      tl.fromTo(
-        "#temple-roof",
-        { scaleX: 0, opacity: 0, rotateX: -5 },
-        { scaleX: 1, opacity: 1, rotateX: 0, duration: 0.15, ease: "elastic.out(1, 0.5)" },
-        0.85,
-      );
-
-      // Diya flame at apex
-      tl.fromTo(
-        "#roof-diya",
-        { opacity: 0, scale: 0 },
-        { opacity: 1, scale: 1, duration: 0.08, ease: "back.out(2)" },
-        0.95,
-      );
-
-      // Light intensifies
-      tl.to("#temple-light-rays", { opacity: 0.25, duration: 0.1 }, 0.95);
-
-      // Title appears
-      tl.fromTo(
-        "#temple-title",
-        { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.08 },
-        0.97,
-      );
-    }, section);
-
-    return () => ctx.revert();
+    return () => {
+      st.kill();
+    };
   }, []);
 
   return (
     <section
-      id="pillars"
       ref={sectionRef}
-      className="relative h-screen w-full overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(180deg, #0d1033 0%, #1a1a42 30%, #3d1a1a 70%, #8b5a2b 90%, #c8a97e 100%)",
-      }}
+      id="pillars"
+      className="relative h-screen w-full"
+      style={{ background: "#0a0510" }}
     >
-      {/* Light rays from above */}
-      <div
-        id="temple-light-rays"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          opacity: 0.08,
-          background:
-            "conic-gradient(from 180deg at 50% 0%, transparent 30%, rgba(200,150,12,0.3) 35%, transparent 40%, transparent 45%, rgba(200,150,12,0.2) 48%, transparent 52%, transparent 60%, rgba(200,150,12,0.25) 63%, transparent 67%, transparent 100%)",
-        }}
-      />
+      {/* 3D Canvas */}
+      <Suspense fallback={null}>
+        <Canvas
+          shadows
+          camera={{ position: [0, 2, 12], fov: 50 }}
+          gl={{
+            antialias: true,
+            toneMapping: THREE.ACESFilmicToneMapping,
+            toneMappingExposure: 1.0,
+          }}
+          dpr={[1, 2]}
+          style={{ position: "absolute", inset: 0 }}
+        >
+          <TempleScene scrollProgress={scrollProgress} />
+        </Canvas>
+      </Suspense>
 
-      {/* Sanskrit border top */}
+      {/* Title overlay */}
       <div
-        className="absolute top-0 left-0 right-0 h-6 opacity-30"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(90deg, transparent 0px, transparent 20px, var(--color-gold) 20px, var(--color-gold) 21px, transparent 21px, transparent 30px, var(--color-gold) 30px, var(--color-gold) 34px, transparent 34px, transparent 40px)",
-          backgroundSize: "60px 100%",
-        }}
-      />
-
-      {/* Title */}
-      <div id="temple-title" className="absolute top-8 left-0 right-0 z-10 text-center" style={{ opacity: 0 }}>
-        <h2
-          className="font-display text-3xl tracking-[0.3em] md:text-5xl"
-          style={{ color: "var(--color-gold)", fontWeight: 600 }}
+        className="pointer-events-none absolute inset-0 flex flex-col items-center justify-start pt-12 transition-opacity duration-700"
+        style={{ opacity: showTitle ? 1 : 0 }}
+      >
+        <div
+          className="text-center text-3xl font-bold uppercase tracking-[0.4em] md:text-4xl"
+          style={{
+            color: "#d4af37",
+            fontFamily: "'Cinzel', serif",
+            textShadow: "0 0 40px rgba(212,175,55,0.3)",
+          }}
         >
           THE TEMPLE OF EXCELLENCE
-        </h2>
+        </div>
         <p
-          className="mt-3 text-[11px] uppercase tracking-[0.35em]"
-          style={{ color: "var(--color-gold-pale)" }}
+          className="mt-4 text-sm italic tracking-widest"
+          style={{
+            color: "#e8c87a",
+            fontFamily: "'Cormorant Garamond', serif",
+          }}
         >
           Four sacred pillars upon which every Majestic experience is built
         </p>
       </div>
 
-      {/* Temple scene */}
-      <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center">
-        {/* Roof / Gopuram */}
-        <div
-          id="temple-roof"
-          className="relative z-10 mb-0 flex flex-col items-center"
-          style={{
-            transformOrigin: "center bottom",
-            transform: "scaleX(0)",
-            perspective: "600px",
-          }}
-        >
-          {/* Triangular pediment */}
-          <div
-            className="relative"
-            style={{
-              width: 0,
-              height: 0,
-              borderLeft: "120px solid transparent",
-              borderRight: "120px solid transparent",
-              borderBottom: "70px solid #8b6914",
-              filter: "drop-shadow(0 -4px 20px rgba(200,150,12,0.3))",
-            }}
-          />
-          {/* Diya at apex */}
-          <svg
-            id="roof-diya"
-            viewBox="0 0 30 40"
-            className="absolute -top-10 h-10 w-8"
-            style={{ opacity: 0 }}
-          >
-            <ellipse cx="15" cy="30" rx="8" ry="4" fill="#c8960c" />
-            <path
-              d="M15 5 C 10 15, 10 22, 15 28 C 20 22, 20 15, 15 5 Z"
-              fill="url(#flame-grad)"
-            />
-            <defs>
-              <linearGradient id="flame-grad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#fff8e0" />
-                <stop offset="40%" stopColor="#f0c040" />
-                <stop offset="100%" stopColor="#ff8c00" />
-              </linearGradient>
-            </defs>
-          </svg>
-          {/* Horizontal lintel */}
-          <div
-            className="w-full"
-            style={{
-              height: 16,
-              background:
-                "linear-gradient(180deg, #a07830 0%, #8b6914 50%, #6b4500 100%)",
-              boxShadow:
-                "0 4px 20px rgba(0,0,0,0.5), inset 0 2px 4px rgba(200,150,12,0.3)",
-              width: "min(90vw, 900px)",
-            }}
-          />
-        </div>
-
-        {/* Pillars container */}
-        <div
-          className="relative flex items-end justify-center gap-6 md:gap-12 lg:gap-20"
-          style={{ width: "min(90vw, 900px)" }}
-        >
-          {PILLARS_DATA.map((p, i) => (
-            <div key={i} className="group relative flex flex-col items-center">
-              {/* Tooltip on hover */}
-              <div
-                className="pointer-events-none absolute -top-32 z-20 w-48 rounded-sm border px-4 py-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                style={{
-                  background: "rgba(26,10,10,0.95)",
-                  borderColor: "var(--color-gold)",
-                  backdropFilter: "blur(8px)",
-                }}
-              >
-                <div className="mb-1 text-[10px] font-semibold tracking-[0.2em] uppercase" style={{ color: "var(--color-gold)" }}>
-                  {p.title}
-                </div>
-                {p.bullets.map((b) => (
-                  <div key={b} className="text-[9px] leading-4" style={{ color: "var(--color-gold-pale)" }}>
-                    ◆ {b}
-                  </div>
-                ))}
-              </div>
-
-              {/* The pillar */}
-              <div
-                id={`temple-pillar-${i}`}
-                className="relative transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(200,150,12,0.4)]"
-                style={{
-                  transformOrigin: "bottom center",
-                  transform: "scaleY(0)",
-                }}
-              >
-                {/* Capital — lotus cap */}
-                <div className="relative mx-auto" style={{ width: 70, height: 28 }}>
-                  <div
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 transition-transform duration-300 group-hover:scale-105"
-                    style={{
-                      width: 70,
-                      height: 24,
-                      background:
-                        "linear-gradient(180deg, #c8a97e 0%, #a07830 40%, #8b6914 100%)",
-                      borderRadius: "50% 50% 4px 4px",
-                      boxShadow:
-                        "0 -2px 10px rgba(200,150,12,0.3), inset 0 4px 8px rgba(255,240,200,0.15)",
-                    }}
-                  />
-                  {/* Lotus motif SVG */}
-                  <svg
-                    viewBox="0 0 50 20"
-                    className="absolute bottom-1 left-1/2 h-4 w-10 -translate-x-1/2"
-                    style={{ color: "var(--color-gold)" }}
-                  >
-                    {[0, 1, 2, 3, 4].map((j) => (
-                      <ellipse
-                        key={j}
-                        cx={10 + j * 7.5}
-                        cy="14"
-                        rx="5"
-                        ry="10"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="0.6"
-                        opacity="0.6"
-                      />
-                    ))}
-                  </svg>
-                </div>
-
-                {/* Shaft */}
-                <div
-                  className="group relative mx-auto overflow-hidden"
-                  style={{
-                    width: 50,
-                    height: "min(35vh, 220px)",
-                    background:
-                      "repeating-linear-gradient(90deg, #b8956a 0px, #a07830 3px, #c8a97e 6px, #a07830 9px, #b8956a 12px)",
-                    boxShadow:
-                      "inset 3px 0 8px rgba(0,0,0,0.3), inset -3px 0 8px rgba(0,0,0,0.3), 4px 0 12px rgba(0,0,0,0.4), -4px 0 12px rgba(0,0,0,0.4)",
-                  }}
-                >
-                  {/* Shimmer effect on hover */}
-                  <div
-                    className="absolute inset-0 -translate-y-full opacity-0 transition-all duration-700 group-hover:translate-y-full group-hover:opacity-30"
-                    style={{
-                      background:
-                        "linear-gradient(180deg, transparent 0%, rgba(255,240,200,0.5) 50%, transparent 100%)",
-                    }}
-                  />
-
-                  {/* Etched label */}
-                  <svg
-                    className="absolute inset-0 h-full w-full"
-                    viewBox="0 0 50 220"
-                    style={{ overflow: "visible" }}
-                  >
-                    <text
-                      id={`pillar-label-${i}`}
-                      x="25"
-                      y="110"
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      fill="none"
-                      stroke="var(--color-gold)"
-                      strokeWidth="0.8"
-                      fontSize="14"
-                      fontFamily="var(--font-serif)"
-                      letterSpacing="3"
-                      transform="rotate(-90 25 110)"
-                      strokeDasharray="300"
-                      strokeDashoffset="300"
-                    >
-                      {p.label}
-                    </text>
-                  </svg>
-                </div>
-
-                {/* Base — tiered plinth */}
-                <div className="flex flex-col items-center">
-                  <div
-                    style={{
-                      width: 58,
-                      height: 10,
-                      background:
-                        "linear-gradient(180deg, #8b6914 0%, #6b4500 100%)",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.4)",
-                    }}
-                  />
-                  <div
-                    style={{
-                      width: 66,
-                      height: 10,
-                      background:
-                        "linear-gradient(180deg, #6b4500 0%, #4a3000 100%)",
-                      boxShadow: "0 4px 8px rgba(0,0,0,0.5)",
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Dust particles */}
-              <div id={`dust-${i}`} className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2">
-                {Array.from({ length: 12 }).map((_, j) => (
-                  <div
-                    key={j}
-                    className="dust-particle absolute rounded-full"
-                    style={{
-                      width: 2 + Math.random() * 3,
-                      height: 2 + Math.random() * 3,
-                      background: "#c8a97e",
-                      opacity: 0,
-                      left: (Math.random() - 0.5) * 30,
-                      top: 0,
-                    }}
-                  />
-                ))}
-              </div>
-
-              {/* Description below */}
-              <div
-                id={`pillar-desc-${i}`}
-                className="mt-3 text-center"
-                style={{ opacity: 0, maxWidth: 140 }}
-              >
-                <div
-                  className="font-display text-sm font-semibold md:text-base"
-                  style={{ color: "var(--color-gold)" }}
-                >
-                  {p.title}
-                </div>
-                <div
-                  className="mt-1 text-[9px] leading-3 md:text-[10px] md:leading-4"
-                  style={{ color: "var(--color-gold-pale)" }}
-                >
-                  {p.desc}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Stone floor */}
-        <div
-          className="w-full"
-          style={{
-            height: 60,
-            background:
-              "repeating-linear-gradient(180deg, #c8a97e 0px, #b8956a 2px, #c8a97e 4px)",
-            boxShadow: "inset 0 4px 20px rgba(0,0,0,0.4), 0 -2px 30px rgba(0,0,0,0.3)",
-          }}
-        />
-
-        {/* Sanskrit border bottom */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-4 opacity-30"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(90deg, transparent 0px, transparent 20px, var(--color-gold) 20px, var(--color-gold) 21px, transparent 21px, transparent 30px, var(--color-gold) 30px, var(--color-gold) 34px, transparent 34px, transparent 40px)",
-            backgroundSize: "60px 100%",
-          }}
-        />
-      </div>
+      {/* Golden exit veil */}
+      <div
+        className="pointer-events-none absolute inset-0 transition-opacity duration-500"
+        style={{
+          background: "radial-gradient(circle, #ffd27a 0%, transparent 70%)",
+          opacity: scrollProgress > 0.9 ? (scrollProgress - 0.9) / 0.1 : 0,
+        }}
+      />
     </section>
   );
 }
