@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
+import { ClientOnly } from "@/components/ClientOnly";
 import { CustomCursor } from "@/components/CustomCursor";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { ScrollProgress } from "@/components/ScrollProgress";
@@ -45,9 +46,13 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <>
-      <Suspense fallback={<div className="fixed inset-0 z-[10000] bg-black" />}>
-        <Loader />
-      </Suspense>
+      <ClientOnly fallback={<div className="fixed inset-0 z-[10000] bg-black" />}>
+        {() => (
+          <Suspense fallback={<div className="fixed inset-0 z-[10000] bg-black" />}>
+            <Loader />
+          </Suspense>
+        )}
+      </ClientOnly>
       <CustomCursor />
       <SmoothScroll />
       <ScrollProgress />
@@ -55,9 +60,13 @@ function Index() {
       <main>
         <Hero />
         <Philosophy />
-        <Suspense fallback={<div className="h-screen bg-[#0a0510]" />}>
-          <Pillars />
-        </Suspense>
+        <ClientOnly fallback={<div className="h-screen bg-[#0a0510]" />}>
+          {() => (
+            <Suspense fallback={<div className="h-screen bg-[#0a0510]" />}>
+              <Pillars />
+            </Suspense>
+          )}
+        </ClientOnly>
         <Stats />
         <Gallery />
         <VideoReel />
