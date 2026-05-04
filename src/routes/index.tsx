@@ -1,12 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Loader } from "@/components/Loader";
+import { lazy, Suspense } from "react";
 import { CustomCursor } from "@/components/CustomCursor";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { Philosophy } from "@/components/Philosophy";
-import { Pillars } from "@/components/Pillars";
 import { Stats } from "@/components/Stats";
 import { Gallery } from "@/components/Gallery";
 import { VideoReel } from "@/components/VideoReel";
@@ -16,6 +15,13 @@ import { Process } from "@/components/Process";
 import { Values } from "@/components/Values";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+
+const Loader = lazy(() =>
+  import("@/components/Loader.client").then((m) => ({ default: m.Loader })),
+);
+const Pillars = lazy(() =>
+  import("@/components/Pillars.client").then((m) => ({ default: m.Pillars })),
+);
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -39,7 +45,9 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <>
-      <Loader />
+      <Suspense fallback={<div className="fixed inset-0 z-[10000] bg-black" />}>
+        <Loader />
+      </Suspense>
       <CustomCursor />
       <SmoothScroll />
       <ScrollProgress />
@@ -47,7 +55,9 @@ function Index() {
       <main>
         <Hero />
         <Philosophy />
-        <Pillars />
+        <Suspense fallback={<div className="h-screen bg-[#0a0510]" />}>
+          <Pillars />
+        </Suspense>
         <Stats />
         <Gallery />
         <VideoReel />
