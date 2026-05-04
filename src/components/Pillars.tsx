@@ -218,7 +218,7 @@ function DustBurst({ x, progress }: { x: number; progress: number }) {
       arr[i * 3] += (Math.random() - 0.5) * delta * 0.3;
     }
     posAttr.needsUpdate = true;
-    ref.current.material.opacity = Math.max(0, 1 - progress);
+    (ref.current.material as THREE.PointsMaterial).opacity = Math.max(0, 1 - progress);
   });
 
   return (
