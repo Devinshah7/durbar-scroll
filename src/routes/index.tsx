@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Loader } from "@/components/Loader";
 import { CustomCursor } from "@/components/CustomCursor";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { ScrollProgress } from "@/components/ScrollProgress";
@@ -60,4 +59,8 @@ function Index() {
       <Footer />
     </>
   );
+}
+
+function Loader() {
+  return null;
 }
