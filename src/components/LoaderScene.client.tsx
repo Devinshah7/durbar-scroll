@@ -329,7 +329,7 @@ function SceneController({ onComplete }: { onComplete: () => void }) {
       },
     });
 
-    return () => tl.kill();
+    return () => { tl.kill(); };
   }, [camera, onComplete]);
 
   return (
