@@ -3,7 +3,7 @@ import { lazy, Suspense, useCallback } from "react";
 import { ClientOnly } from "@/components/ClientOnly";
 
 const LoaderSceneLazy = lazy(() =>
-  import("@/components/LoaderScene.client").then((m) => ({ default: m.LoaderScene }))
+  import("@/components/LoaderScene").then((m) => ({ default: m.LoaderScene }))
 );
 
 export const Route = createFileRoute("/")({
