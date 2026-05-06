@@ -1,66 +1,54 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { CustomCursor } from "@/components/CustomCursor";
-import { SmoothScroll } from "@/components/SmoothScroll";
-import { ScrollProgress } from "@/components/ScrollProgress";
-import { Navigation } from "@/components/Navigation";
-import { Hero } from "@/components/Hero";
-import { Philosophy } from "@/components/Philosophy";
-import { Pillars } from "@/components/Pillars";
-import { Stats } from "@/components/Stats";
-import { Gallery } from "@/components/Gallery";
-import { VideoReel } from "@/components/VideoReel";
-import { ClientLogos } from "@/components/ClientLogos";
-import { Team } from "@/components/Team";
-import { Process } from "@/components/Process";
-import { Values } from "@/components/Values";
-import { Contact } from "@/components/Contact";
-import { Footer } from "@/components/Footer";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { lazy, Suspense, useCallback } from "react";
+import { ClientOnly } from "@/components/ClientOnly";
+
+const LoaderSceneLazy = lazy(() =>
+  import("@/components/LoaderScene.client").then((m) => ({ default: m.LoaderScene }))
+);
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  component: LoaderRoute,
   head: () => ({
     meta: [
-      { title: "The Majestic Bharat — Events, Tourism & Cultural Storytelling" },
+      { title: "The Majestic Bharat — Where Every Experience Becomes A Sacred Journey" },
       {
         name: "description",
-        content:
-          "India's premium experiential partner. 500+ events. Corporate, MICE travel, celebrity management, and culturally-rooted experiences since 2015.",
-      },
-      { property: "og:title", content: "The Majestic Bharat" },
-      {
-        property: "og:description",
-        content: "A blend of culture through events & tourism. India's most trusted experiential partner.",
+        content: "India's premium experiential partner. Events, Tourism & Cultural Storytelling.",
       },
     ],
   }),
 });
 
-function Index() {
-  return (
-    <>
-      <Loader />
-      <CustomCursor />
-      <SmoothScroll />
-      <ScrollProgress />
-      <Navigation />
-      <main>
-        <Hero />
-        <Philosophy />
-        <Pillars />
-        <Stats />
-        <Gallery />
-        <VideoReel />
-        <ClientLogos />
-        <Team />
-        <Process />
-        <Values />
-        <Contact />
-      </main>
-      <Footer />
-    </>
-  );
-}
+function LoaderRoute() {
+  const navigate = useNavigate();
 
-function Loader() {
-  return null;
+  const handleComplete = useCallback(() => {
+    navigate({ to: "/gates" });
+  }, [navigate]);
+
+  return (
+    <ClientOnly
+      fallback={
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center" style={{ background: "#000" }}>
+          <div style={{ fontFamily: "Cinzel, serif", fontSize: 28, color: "#d4af37", letterSpacing: "0.3em" }}>
+            THE MAJESTIC BHARAT
+          </div>
+        </div>
+      }
+    >
+      {() => (
+        <Suspense
+          fallback={
+            <div className="fixed inset-0 z-[10000] flex items-center justify-center" style={{ background: "#000" }}>
+              <div style={{ fontFamily: "Cinzel, serif", fontSize: 28, color: "#d4af37", letterSpacing: "0.3em" }}>
+                THE MAJESTIC BHARAT
+              </div>
+            </div>
+          }
+        >
+          <LoaderSceneLazy onComplete={handleComplete} />
+        </Suspense>
+      )}
+    </ClientOnly>
+  );
 }
