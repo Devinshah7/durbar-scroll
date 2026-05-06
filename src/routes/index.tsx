@@ -2,8 +2,8 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { lazy, Suspense, useCallback } from "react";
 import { ClientOnly } from "@/components/ClientOnly";
 
-const LoaderSceneLazy = lazy(() =>
-  import("@/components/LoaderScene").then((m) => ({ default: m.LoaderScene }))
+const CinematicLoaderLazy = lazy(() =>
+  import("@/components/loader/CinematicLoader")
 );
 
 export const Route = createFileRoute("/")({
@@ -46,7 +46,7 @@ function LoaderRoute() {
             </div>
           }
         >
-          <LoaderSceneLazy onComplete={handleComplete} />
+          <CinematicLoaderLazy onComplete={handleComplete} />
         </Suspense>
       )}
     </ClientOnly>
