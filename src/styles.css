@@ -583,3 +583,73 @@ section::before {
 .cursor-trail {
   will-change: left, top, opacity;
 }
+
+/* ============================================================
+   LOADER ANIMATIONS
+   ============================================================ */
+@keyframes veil-sweep {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(200%); }
+}
+
+.animate-loader-logo {
+  animation: loader-logo-in 0.8s power3-out both;
+}
+@keyframes loader-logo-in {
+  from { transform: scale(2.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-loader-tagline {
+  animation: loader-tagline-in 0.5s ease-out 0.3s both;
+}
+@keyframes loader-tagline-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ============================================================
+   GATES ANIMATIONS
+   ============================================================ */
+@keyframes spark-rise {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+}
+
+@keyframes shimmer-sweep {
+  from { background-position: -100% 0%; }
+  to { background-position: 200% 0%; }
+}
+
+@keyframes diya-flicker {
+  0% { transform: translateX(-50%) scaleX(1) scaleY(0.92) rotate(-2deg); opacity: 0.85; }
+  100% { transform: translateX(-50%) scaleX(0.88) scaleY(1.08) rotate(2deg); opacity: 1; }
+}
+
+@keyframes pulse-ribbon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+/* Font helpers for Cinzel */
+.font-cinzel { font-family: "Cinzel", serif; }
+.font-cormorant { font-family: "Cormorant Garamond", serif; }
+
+/* Mobile gate sizing */
+@media (max-width: 1024px) {
+  .gate-card { width: 280px !important; height: 470px !important; }
+}
+@media (max-width: 768px) {
+  .gate-card {
+    width: 88vw !important;
+    height: 420px !important;
+  }
+  .gate-card:hover {
+    transform: none !important;
+  }
+}
+@media (max-width: 480px) {
+  .gate-card { height: 380px !important; }
+}
