@@ -47,7 +47,7 @@ export function AnimalCaravan() {
           >
             Brands That Have Travelled With Us
           </h2>
-          <div className="heading-flourish mx-auto">
+          <div className="heading-flourish mx-auto" style={{ color: "var(--color-terracotta)" }}>
             <span className="flourish-diamond">◆</span>
           </div>
         </FadeUp>
