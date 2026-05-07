@@ -583,26 +583,18 @@
 section {
   position: relative;
 }
-section::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 80px;
-  background: linear-gradient(to bottom, transparent, var(--color-ink));
-  pointer-events: none;
-  z-index: 5;
-}
+/* Removed generic section::after that forced gradient-to-ink on every section.
+   Each section now manages its own bottom-edge blend via inline styles or
+   dedicated classes. A subtle gold hairline remains at section tops. */
 section::before {
   content: "";
   position: absolute;
-  top: -2px;
+  top: -1px;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent 10%, var(--color-gold) 50%, transparent 90%);
-  opacity: 0.15;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 15%, var(--color-gold) 50%, transparent 85%);
+  opacity: 0.10;
   pointer-events: none;
   z-index: 5;
 }
