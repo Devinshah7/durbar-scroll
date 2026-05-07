@@ -3,6 +3,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useTexture, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { gsap } from "gsap";
+import { Logo } from "@/components/Logo";
 
 /* ============================================================
    FRESNEL ATMOSPHERE SHADER
@@ -339,18 +340,7 @@ export function LoaderScene({ onComplete }: { onComplete: () => void }) {
             className="relative z-10 flex flex-col items-center animate-loader-logo"
             style={{ filter: "drop-shadow(0 0 30px rgba(255,215,0,0.6))" }}
           >
-            <div style={{
-              fontFamily: "Cinzel, serif", fontSize: "72px", fontWeight: 700,
-              fontStyle: "italic", color: "#d4af37", lineHeight: 1,
-            }}>
-              M°
-            </div>
-            <div style={{
-              fontFamily: "Cinzel, serif", fontSize: "28px", letterSpacing: "0.35em",
-              color: "#e8c87a", marginTop: "8px",
-            }}>
-              THE MAJESTIC BHARAT
-            </div>
+            <Logo height={140} glow />
           </div>
 
           <div
