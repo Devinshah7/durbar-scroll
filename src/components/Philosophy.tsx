@@ -149,7 +149,6 @@ export function Philosophy() {
 
       <style>{`
         #philosophy-text h2 {
-          font-size: clamp(36px, 5vw, 68px);
           color: var(--color-ivory);
           line-height: 1.05;
         }
