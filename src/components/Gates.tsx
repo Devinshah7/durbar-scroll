@@ -505,14 +505,16 @@ function Gate({ gate, index, onComingSoon }: { gate: typeof GATES[0]; index: num
       onMouseMove={handleMouseMove}
       onClick={handleClick}
     >
-      {/* Backglow - theme colored */}
+      {/* Backglow - theme colored with gentle pulse */}
       <div
-        className="absolute -inset-[20%] rounded-full transition-opacity duration-500"
+        className="absolute -inset-[20%] rounded-full"
         style={{
           background: `radial-gradient(ellipse at center, ${gate.theme.glow} 0%, rgba(212,175,55,0.2) 35%, transparent 70%)`,
           filter: "blur(50px)",
-          opacity: hovered ? 1 : 0,
+          opacity: hovered ? 1 : 0.15,
           zIndex: -1,
+          transition: "opacity 0.6s ease",
+          animation: "gate-glow-pulse 4s ease-in-out infinite",
         }}
       />
 
@@ -520,90 +522,102 @@ function Gate({ gate, index, onComingSoon }: { gate: typeof GATES[0]; index: num
       <div
         className="relative h-full w-full"
         style={{
-          transform: `translateZ(30px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) ${hovered ? "translateY(-12px) scale(1.03)" : ""}`,
+          transform: `translateZ(30px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) ${hovered ? "translateY(-4px) scale(1.03)" : ""}`,
           transformStyle: "preserve-3d",
-          transition: "transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
+          transition: "transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)",
           animation: hovered ? "none" : "gate-breathe 4s ease-in-out infinite",
         }}
       >
-        {/* Shadow layer for depth - projects arch forward */}
+        {/* Shadow layer for depth */}
         <div
           className="absolute inset-0 z-10"
           style={{
             boxShadow: hovered
-              ? "0 20px 60px rgba(0,0,0,0.6), 0 5px 20px rgba(0,0,0,0.4), inset 0 0 40px rgba(0,0,0,0.3)"
+              ? "0 24px 60px rgba(0,0,0,0.6), 0 5px 20px rgba(0,0,0,0.4), inset 0 0 40px rgba(0,0,0,0.3)"
               : "0 10px 40px rgba(0,0,0,0.4), 0 3px 12px rgba(0,0,0,0.3), inset 0 0 30px rgba(0,0,0,0.2)",
             borderRadius: "4px",
-            transition: "box-shadow 0.4s",
+            transition: "box-shadow 0.6s",
           }}
         />
 
-        {/* Recessed photo interior */}
-        <div
-          className="absolute inset-[12px] overflow-hidden"
-          style={{
-            clipPath: `polygon(
-              0% 100%, 0% 35%,
-              3% 22%, 8% 14%, 16% 8%, 25% 4%, 35% 2%, 44% 1%, 50% 0.5%, 56% 1%, 65% 2%, 75% 4%, 84% 8%, 92% 14%, 97% 22%, 100% 35%,
-              100% 100%
-            )`,
-            boxShadow: "inset 0 8px 30px rgba(0,0,0,0.7), inset 4px 0 20px rgba(0,0,0,0.4), inset -4px 0 20px rgba(0,0,0,0.4)",
-          }}
-        >
-          <img
-            src={gate.image}
-            alt={gate.title}
-            className="absolute inset-0 h-full w-full object-cover transition-all duration-500"
-            style={{
-              filter: hovered ? "brightness(1.15) saturate(1.3)" : "brightness(0.65) saturate(0.95)",
-              transform: hovered ? "scale(1.08)" : "scale(1)",
-            }}
-          />
-          {/* Dark gradient overlay */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: "linear-gradient(180deg, transparent 20%, rgba(26,10,10,0.3) 50%, rgba(26,10,10,0.95) 100%)",
-            }}
-          />
-          {/* Diya glow casting down from top */}
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2"
-            style={{
-              width: "60%",
-              height: "40%",
-              background: `radial-gradient(ellipse at top center, ${gate.theme.accent}30 0%, transparent 70%)`,
-              opacity: hovered ? 1 : 0.4,
-              transition: "opacity 0.4s",
-            }}
-          />
-          {/* Shimmer sweep on hover */}
-          {hovered && (
-            <div
-              className="absolute inset-0"
+        {/* Recessed photo interior - clipped to arch via SVG clipPath */}
+        <svg viewBox="0 0 320 540" className="absolute inset-0 h-full w-full" style={{ overflow: "hidden" }}>
+          <defs>
+            <clipPath id={`img-clip-${gate.theme.motif}`}>
+              <path d="
+                M 36 540 L 36 180
+                Q 36 130 60 95
+                Q 85 60 120 40
+                Q 140 30 160 27
+                Q 180 30 200 40
+                Q 235 60 260 95
+                Q 284 130 284 180
+                L 284 540 Z
+              " />
+            </clipPath>
+          </defs>
+          <g clipPath={`url(#img-clip-${gate.theme.motif})`}>
+            <image
+              href={gate.image}
+              x="20" y="10" width="280" height="530"
+              preserveAspectRatio="xMidYMid slice"
               style={{
-                background: "linear-gradient(115deg, transparent 30%, rgba(255,215,0,0.3) 50%, transparent 70%)",
-                animation: "shimmer-sweep 1.4s linear infinite",
+                filter: hovered ? "brightness(1.15) saturate(1.3)" : "brightness(0.65) saturate(0.95)",
+                transform: hovered ? "scale(1.06)" : "scale(1)",
+                transformOrigin: "160px 270px",
+                transition: "filter 0.5s, transform 0.5s",
               }}
             />
-          )}
-        </div>
+            {/* Dark gradient overlay inside arch */}
+            <rect x="20" y="0" width="280" height="540" fill="url(#photo-darken)" />
+          </g>
+          <defs>
+            <linearGradient id="photo-darken" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0.2" stopColor="rgba(0,0,0,0)" />
+              <stop offset="0.5" stopColor="rgba(26,10,10,0.3)" />
+              <stop offset="1" stopColor="rgba(26,10,10,0.95)" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        {/* Shimmer sweep on hover (layered above photo) */}
+        {hovered && (
+          <div
+            className="absolute inset-0 z-15 pointer-events-none"
+            style={{
+              clipPath: `polygon(
+                11.25% 100%, 11.25% 33.3%,
+                13.5% 22%, 17% 15%, 22% 10%, 28% 6%, 34% 4%, 42% 2.5%, 50% 2%, 58% 2.5%, 66% 4%, 72% 6%, 78% 10%, 83% 15%, 86.5% 22%, 88.75% 33.3%,
+                88.75% 100%
+              )`,
+              background: "linear-gradient(115deg, transparent 30%, rgba(255,215,0,0.25) 50%, transparent 70%)",
+              animation: "shimmer-sweep 1.6s linear infinite",
+            }}
+          />
+        )}
 
         {/* Ornate arch SVG frame overlay */}
         <ArchFrame motif={gate.theme.motif} hovered={hovered} />
 
-        {/* Nameplate */}
+        {/* Nameplate with shimmer on hover */}
         <Nameplate title={gate.title} motif={gate.theme.motif} hovered={hovered} />
 
-        {/* Tagline */}
+        {/* Tagline - elegant italic serif with gold-to-cream gradient */}
         <div
-          className="absolute bottom-5 left-1/2 z-30 -translate-x-1/2 text-center"
+          className="absolute bottom-4 left-1/2 z-30 -translate-x-1/2 text-center whitespace-nowrap"
           style={{
             fontFamily: "Cormorant Garamond, serif",
             fontStyle: "italic",
+            fontWeight: 500,
             fontSize: 15,
-            color: "#e8c87a",
-            textShadow: "0 1px 4px rgba(0,0,0,0.6)",
+            letterSpacing: "0.04em",
+            background: "linear-gradient(135deg, #ffd700 0%, #e8c87a 40%, #fff5e0 100%)",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
+            textShadow: "none",
+            filter: hovered ? "drop-shadow(0 0 6px rgba(255,215,0,0.4))" : "drop-shadow(0 1px 3px rgba(0,0,0,0.5))",
+            transition: "filter 0.5s",
           }}
         >
           {gate.tagline}
