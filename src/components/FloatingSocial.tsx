@@ -43,19 +43,19 @@ export function FloatingSocial() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={s.label}
-          className="group flex h-12 w-12 items-center justify-center rounded-lg transition-all duration-300"
+          className="group flex h-12 w-12 items-center justify-center rounded-lg transition-all duration-500"
           style={{
-            background: "#1A1A2E",
+            background: "var(--section-warm-dark)",
             border: "1px solid rgba(201,168,76,0.4)",
-            color: "#C9A84C",
+            color: "var(--color-gold)",
           }}
           onMouseEnter={(e) => {
-            (e.currentTarget as HTMLElement).style.background = "#C9A84C";
-            (e.currentTarget as HTMLElement).style.color = "#1A1A2E";
+            (e.currentTarget as HTMLElement).style.background = "var(--color-gold)";
+            (e.currentTarget as HTMLElement).style.color = "var(--section-dark)";
           }}
           onMouseLeave={(e) => {
-            (e.currentTarget as HTMLElement).style.background = "#1A1A2E";
-            (e.currentTarget as HTMLElement).style.color = "#C9A84C";
+            (e.currentTarget as HTMLElement).style.background = "var(--section-warm-dark)";
+            (e.currentTarget as HTMLElement).style.color = "var(--color-gold)";
           }}
         >
           {s.icon}
