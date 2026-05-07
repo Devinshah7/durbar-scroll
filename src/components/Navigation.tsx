@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Logo } from "@/components/Logo";
+import { Link } from "@tanstack/react-router";
 
-const links = [
-  { label: "About", href: "#philosophy" },
-  { label: "Services", href: "#pillars" },
-  { label: "Our Work", href: "#gallery" },
-  { label: "Team", href: "#team" },
-  { label: "Connect", href: "#contact" },
+const leftLinks = [
+  { label: "Home", href: "/gates", isRoute: true },
+  { label: "About", href: "#philosophy", isRoute: false },
+];
+
+const rightLinks = [
+  { label: "Team", href: "#team", isRoute: false },
+  { label: "Connect", href: "#contact", isRoute: false },
+  { label: "Journal", href: "/blogs", isRoute: true },
 ];
 
 const dropdownItems = [
