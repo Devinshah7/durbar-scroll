@@ -104,7 +104,7 @@ export function Process() {
     <section
       ref={sectionRef}
       className="relative"
-      style={{ background: "var(--color-ivory)" }}
+      style={{ background: "linear-gradient(180deg, var(--section-warm-dark) 0%, var(--section-cream) 10%, var(--section-light) 100%)" }}
     >
       <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-6 py-24 md:grid-cols-[40%_1fr] md:gap-16 md:px-10 md:py-0">
         {/* LEFT — pinned */}

@@ -42,11 +42,11 @@ export function Hero() {
       id="top"
       ref={heroRef}
       className="relative min-h-screen w-full overflow-hidden"
-      style={{ background: "var(--color-ink)" }}
+      style={{ background: "var(--section-dark)" }}
     >
       <div className="relative flex h-[88vh] min-h-[640px] w-full">
         {/* LEFT */}
-        <div className="relative h-full w-[40%] overflow-hidden" style={{ background: "linear-gradient(to bottom, var(--color-burgundy-dark), var(--color-ink))" }}>
+        <div className="relative h-full w-[40%] overflow-hidden" style={{ background: "linear-gradient(to bottom, var(--color-maroon-deep), var(--section-dark))" }}>
           <img src={heroLeft} alt="A ceremonial Indian gathering bathed in chandelier light" className="absolute inset-0 h-full w-full object-cover opacity-90" width={704} height={1280} />
           <div className="pointer-events-none absolute inset-0">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -60,7 +60,7 @@ export function Hero() {
         </div>
 
         {/* RIGHT */}
-        <div className="relative h-full w-[60%] overflow-hidden" style={{ background: "linear-gradient(to bottom, var(--color-indigo-night), var(--color-ink))" }}>
+        <div className="relative h-full w-[60%] overflow-hidden" style={{ background: "linear-gradient(to bottom, var(--color-charcoal), var(--section-dark))" }}>
           <img src={heroRight} alt="A grand corporate event stage" className="absolute inset-0 h-full w-full object-cover opacity-85" width={1280} height={720} />
           <div className="pointer-events-none absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(200,150,12,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(200,150,12,0.05) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
           <div className="pointer-events-none absolute inset-0" style={{ boxShadow: "inset 60px 0 80px rgba(200,150,12,0.1)" }} />

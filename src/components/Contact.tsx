@@ -26,7 +26,7 @@ export function Contact() {
         className="relative px-6 py-20 md:px-14 md:py-32"
         style={{
           background:
-            "radial-gradient(circle at 30% 30%, var(--color-burgundy), var(--color-burgundy-dark) 70%)",
+            "radial-gradient(circle at 30% 30%, var(--color-maroon), var(--color-maroon-deep) 70%)",
         }}
       >
         <h2
@@ -91,7 +91,7 @@ export function Contact() {
       {/* RIGHT — Form */}
       <div
         className="relative px-6 py-20 md:px-14 md:py-32"
-        style={{ background: "var(--color-ink)" }}
+        style={{ background: "var(--section-dark)" }}
       >
         <div className="eyebrow mb-7">Start a Conversation</div>
         {!submitted ? (

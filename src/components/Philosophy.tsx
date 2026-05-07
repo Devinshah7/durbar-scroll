@@ -41,7 +41,7 @@ export function Philosophy() {
     <section
       id="philosophy"
       className="relative overflow-hidden py-28 md:py-40"
-      style={{ background: "var(--color-burgundy-dark)" }}
+      style={{ background: "linear-gradient(180deg, var(--section-dark) 0%, var(--section-maroon) 15%, var(--section-maroon) 100%)" }}
     >
       <Diyas count={10} />
       <div className="relative mx-auto grid max-w-[1400px] grid-cols-1 gap-16 px-6 md:grid-cols-[45%_1fr] md:gap-20 md:px-10">

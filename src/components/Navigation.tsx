@@ -164,7 +164,7 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
       {/* Mobile overlay */}
       <div
         className={`fixed inset-0 z-[999] flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
-        style={{ background: "var(--color-burgundy-dark)" }}
+        style={{ background: "var(--section-maroon)" }}
       >
         {links.map((l, i) => (
           <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="font-display text-4xl italic"

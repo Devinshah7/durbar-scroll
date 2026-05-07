@@ -32,7 +32,7 @@ export { BLOGS };
 
 export function BlogPreview() {
   return (
-    <section className="relative overflow-hidden py-24 md:py-32" style={{ background: "var(--color-ink)" }}>
+    <section className="relative overflow-hidden py-24 md:py-32" style={{ background: "linear-gradient(180deg, var(--section-light) 0%, var(--section-dark) 12%, var(--section-dark) 100%)" }}>
       <div className="relative mx-auto max-w-[1300px] px-6 md:px-10">
         <FadeUp className="mb-14 text-center">
           <p className="eyebrow mb-4">Stories from the Soul of India</p>
@@ -50,7 +50,7 @@ export function BlogPreview() {
             <FadeUp key={blog.slug}>
               <article
                 className="group overflow-hidden rounded-lg transition-all duration-300 hover:-translate-y-1"
-                style={{ background: "#1A1A2E", border: "1px solid rgba(200,150,12,0.2)" }}
+                style={{ background: "var(--section-warm-dark)", border: "1px solid rgba(200,150,12,0.2)" }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(200,150,12,0.6)"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(200,150,12,0.2)"; }}
               >
@@ -61,7 +61,7 @@ export function BlogPreview() {
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(26,26,46,0.7), transparent 50%)" }} />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, var(--section-warm-dark), transparent 50%)" }} />
                 </div>
                 <div className="p-6">
                   <span className="text-[11px] font-semibold uppercase tracking-[0.25em]" style={{ color: "var(--color-gold)" }}>
