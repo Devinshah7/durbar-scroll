@@ -328,16 +328,24 @@ function SealedBanner() {
       className="absolute right-[-20px] top-[30px] z-40"
       style={{ transform: "rotate(30deg)" }}
     >
-      {/* Silk ribbon */}
+      {/* Silk ribbon with fabric grain */}
       <div
         style={{
           background: "linear-gradient(135deg, #6b1a1a 0%, #8b2020 30%, #5a1515 70%, #3d0e0e 100%)",
           padding: "6px 32px",
           borderRadius: "2px",
-          boxShadow: "0 3px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,200,200,0.1)",
+          boxShadow: "0 4px 16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,200,200,0.1)",
           position: "relative" as const,
         }}
       >
+        {/* Fabric grain texture */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255,255,255,0.02) 1px, rgba(255,255,255,0.02) 2px), repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,0.04) 1px, rgba(0,0,0,0.04) 2px)",
+            borderRadius: "2px",
+          }}
+        />
         {/* Silk sheen */}
         <div
           className="absolute inset-0"
