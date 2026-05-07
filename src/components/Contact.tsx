@@ -71,18 +71,24 @@ export function Contact() {
           </div>
         </div>
         <div className="mt-10 flex gap-3">
-          {["IG", "in", "▶"].map((s) => (
+          {[
+            { label: "IG", href: "https://www.instagram.com/tmb_events2015/" },
+            { label: "in", href: "https://www.linkedin.com/company/themajesticbharat/" },
+            { label: "▶", href: "https://youtube.com/@themajesticbharat_tmb?si=qRIBvHadpV1pVxVF" },
+          ].map((s) => (
             <a
-              key={s}
-              href="#"
-              aria-label={`Social ${s}`}
-              className="flex h-10 w-10 items-center justify-center rounded-full border text-[12px] font-semibold transition-all hover:bg-[var(--color-gold)] hover:text-[var(--color-ink)]"
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Social ${s.label}`}
+              className="flex h-10 w-10 items-center justify-center rounded-full border text-[12px] font-semibold transition-all duration-500 hover:bg-[var(--color-gold)] hover:text-[var(--color-ink)]"
               style={{
                 borderColor: "var(--color-gold)",
                 color: "var(--color-gold)",
               }}
             >
-              {s}
+              {s.label}
             </a>
           ))}
         </div>
