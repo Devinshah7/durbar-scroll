@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { gsap } from "gsap";
+import { ComingSoonModal } from "@/components/ComingSoonModal";
 
 const GATES = [
   {
@@ -409,7 +410,7 @@ function JaliPattern() {
 }
 
 /* Individual Gate Card */
-function Gate({ gate, index }: { gate: typeof GATES[0]; index: number }) {
+function Gate({ gate, index, onComingSoon }: { gate: typeof GATES[0]; index: number; onComingSoon: (pillar: string) => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(false);
@@ -440,14 +441,7 @@ function Gate({ gate, index }: { gate: typeof GATES[0]; index: number }) {
 
   const handleClick = () => {
     if (!gate.active) {
-      if (ref.current) {
-        gsap.fromTo(ref.current, { x: 0 }, {
-          x: 6, duration: 0.08, repeat: 7, yoyo: true, ease: "power1.inOut",
-          onComplete: () => gsap.set(ref.current, { x: 0 }),
-        });
-      }
-      setTooltip(true);
-      setTimeout(() => setTooltip(false), 3000);
+      onComingSoon(gate.title === "CELEBRITY" ? "Celebrities" : "Tourism");
       return;
     }
     document.querySelectorAll(".gate-card").forEach((el, i) => {
