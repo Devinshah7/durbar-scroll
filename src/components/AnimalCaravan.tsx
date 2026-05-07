@@ -1,6 +1,7 @@
+import type { ReactNode } from "react";
 import { FadeUp } from "@/lib/reveal";
 
-const BRAND_ANIMALS: { brand: string; animal: string; svg: JSX.Element }[] = [
+const BRAND_ANIMALS: { brand: string; animal: string; svg: ReactNode }[] = [
   {
     brand: "Reliance",
     animal: "Elephant",
