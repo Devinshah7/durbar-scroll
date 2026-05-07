@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Logo } from "@/components/Logo";
+import { Link } from "@tanstack/react-router";
 
-const links = [
-  { label: "About", href: "#philosophy" },
-  { label: "Services", href: "#pillars" },
-  { label: "Our Work", href: "#gallery" },
-  { label: "Team", href: "#team" },
-  { label: "Connect", href: "#contact" },
+const leftLinks = [
+  { label: "Home", href: "/gates", isRoute: true },
+  { label: "About", href: "#philosophy", isRoute: false },
+];
+
+const rightLinks = [
+  { label: "Team", href: "#team", isRoute: false },
+  { label: "Connect", href: "#contact", isRoute: false },
+  { label: "Journal", href: "/blogs", isRoute: true },
 ];
 
 const dropdownItems = [
@@ -98,12 +102,19 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
         <div className="mx-auto grid max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center px-6 md:px-10">
           {/* Left nav */}
           <nav className="hidden items-center gap-7 md:flex">
-            {links.slice(0, 2).map((l) => (
-              <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
-                {l.label}
-                <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
-              </a>
-            ))}
+            {leftLinks.map((l) =>
+              l.isRoute ? (
+                <Link key={l.label} to={l.href as any} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
+                  {l.label}
+                  <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
+                </Link>
+              ) : (
+                <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
+                  {l.label}
+                  <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
+                </a>
+              )
+            )}
             {/* Services dropdown */}
             <div className="relative" onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
               <button className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
@@ -138,12 +149,19 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
           {/* Right nav */}
           <div className="flex items-center justify-end gap-7">
             <nav className="hidden items-center gap-7 md:flex">
-              {links.slice(3).map((l) => (
-                <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
-                  {l.label}
-                  <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
-                </a>
-              ))}
+              {rightLinks.map((l) =>
+                l.isRoute ? (
+                  <Link key={l.label} to={l.href as any} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
+                    {l.label}
+                    <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
+                  </Link>
+                ) : (
+                  <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
+                    {l.label}
+                    <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
+                  </a>
+                )
+              )}
             </nav>
 
             <a href="#contact" onClick={(e) => handleNav(e, "#contact")} className="hidden md:inline-flex btn-outline-gold !py-2.5 !px-5 !text-[10px] rounded-full">
@@ -164,12 +182,19 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
         className={`fixed inset-0 z-[999] flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
         style={{ background: "var(--section-maroon)" }}
       >
-        {links.map((l, i) => (
-          <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="font-display text-4xl italic"
-            style={{ color: "var(--color-gold-pale)", transform: open ? "translateX(0)" : "translateX(-30px)", opacity: open ? 1 : 0, transition: `all 0.4s ease ${i * 0.07 + 0.1}s` }}>
-            {l.label}
-          </a>
-        ))}
+        {[...leftLinks, { label: "Services", href: "#pillars", isRoute: false }, ...rightLinks].map((l, i) =>
+          l.isRoute ? (
+            <Link key={l.label} to={l.href as any} onClick={() => setOpen(false)} className="font-display text-4xl italic"
+              style={{ color: "var(--color-gold-pale)", transform: open ? "translateX(0)" : "translateX(-30px)", opacity: open ? 1 : 0, transition: `all 0.4s ease ${i * 0.07 + 0.1}s` }}>
+              {l.label}
+            </Link>
+          ) : (
+            <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="font-display text-4xl italic"
+              style={{ color: "var(--color-gold-pale)", transform: open ? "translateX(0)" : "translateX(-30px)", opacity: open ? 1 : 0, transition: `all 0.4s ease ${i * 0.07 + 0.1}s` }}>
+              {l.label}
+            </a>
+          )
+        )}
         {/* Mobile coming soon links */}
         <button onClick={() => { setOpen(false); onComingSoon?.("Tourism"); }} className="font-display text-2xl italic" style={{ color: "rgba(253,246,227,0.4)" }}>
           Tourism <span className="text-sm">(Coming Soon)</span>
