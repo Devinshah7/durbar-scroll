@@ -34,18 +34,26 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Durbar Court palette as utility colors */
-  --color-burgundy: var(--burgundy);
-  --color-burgundy-dark: var(--burgundy-dark);
+  /* Varanasi palette as utility colors */
+  --color-maroon: var(--maroon);
+  --color-maroon-deep: var(--maroon-deep);
   --color-gold: var(--gold);
   --color-gold-bright: var(--gold-bright);
   --color-gold-pale: var(--gold-pale);
-  --color-indigo-night: var(--indigo);
   --color-saffron: var(--saffron);
+  --color-marigold: var(--marigold);
+  --color-terracotta: var(--terracotta);
   --color-ivory: var(--ivory);
+  --color-cream: var(--cream);
   --color-ink: var(--ink);
-  --color-forest: var(--forest);
+  --color-charcoal: var(--charcoal);
+  --color-indigo-subtle: var(--indigo-subtle);
   --color-smoke: var(--smoke);
+  /* Legacy aliases for compatibility */
+  --color-burgundy: var(--maroon);
+  --color-burgundy-dark: var(--maroon-deep);
+  --color-indigo-night: var(--charcoal);
+  --color-forest: var(--terracotta);
 
   --font-display: "Cormorant Garamond", serif;
   --font-serif: "Playfair Display", serif;
