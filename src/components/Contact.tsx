@@ -59,7 +59,7 @@ export function Contact() {
         >
           <div className="flex items-center gap-3">
             <span style={{ color: "var(--color-gold)" }}>✆</span>
-            +91 9833122999
+            <a href="tel:+919167122999" style={{ color: "inherit", textDecoration: "none" }}>+91 9167122999</a>
           </div>
           <div className="flex items-center gap-3">
             <span style={{ color: "var(--color-gold)" }}>✉</span>

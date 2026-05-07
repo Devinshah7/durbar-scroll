@@ -7,11 +7,10 @@ import heroRight from "@/assets/hero-right.jpg";
 const MORPH_WORDS = ["experiences.", "ceremonies.", "stories.", "moments.", "journeys."];
 
 export function Hero() {
-  const orbRef = useRef<HTMLDivElement>(null);
   const morphRef = useRef<HTMLSpanElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
 
-  // Hero entrance + magnetic orb
+  // Hero entrance
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".hero-content > *", {
@@ -23,20 +22,7 @@ export function Hero() {
         delay: 2.6,
       });
     }, heroRef);
-
-    const onMove = (e: MouseEvent) => {
-      const orb = orbRef.current;
-      if (!orb) return;
-      const rect = orb.getBoundingClientRect();
-      const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.05;
-      const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.05;
-      gsap.to(orb, { x: dx, y: dy, duration: 1.5, ease: "power2.out" });
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => {
-      ctx.revert();
-      window.removeEventListener("mousemove", onMove);
-    };
+    return () => ctx.revert();
   }, []);
 
   // Morphing word
@@ -148,17 +134,6 @@ export function Hero() {
           <Diyas count={7} />
         </div>
 
-        {/* Diya orb at the seam */}
-        <div
-          ref={orbRef}
-          className="diya-orb"
-          style={{ left: "40%", top: "50%", transform: "translate(-50%, -50%)" }}
-        >
-          <div className="orb-glow" />
-          <div className="orb-core" />
-          <div className="orb-ring" />
-          <div className="orb-flame" />
-        </div>
 
         {/* Hero overlay text */}
         <div className="pointer-events-none absolute inset-0 flex items-center">
