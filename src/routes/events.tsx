@@ -70,7 +70,7 @@ function EventsPage() {
         ref={overlayRef}
         className="pointer-events-none fixed inset-0 z-[10000]"
         style={{
-          background: "radial-gradient(circle at center, rgba(255,215,0,0.9) 0%, rgba(255,140,0,0.6) 40%, #1a0a0a 80%)",
+          background: "radial-gradient(circle at center, rgba(208,100,24,0.8) 0%, rgba(220,160,40,0.5) 40%, var(--section-dark) 80%)",
         }}
       />
       <CustomCursor />
