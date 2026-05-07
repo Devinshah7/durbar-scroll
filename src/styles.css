@@ -109,6 +109,9 @@
   --section-maroon: var(--maroon-deep);
   --section-light: var(--ivory);
   --section-cream: var(--cream);
+  /* Intermediate tones for seamless transitions */
+  --section-terracotta: oklch(0.32 0.08 30);     /* warm mid-dark between maroon and cream */
+  --section-warm-cream: oklch(0.90 0.04 78);      /* slightly warmer cream */
 }
 
 @layer base {
