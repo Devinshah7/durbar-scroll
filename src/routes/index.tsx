@@ -31,9 +31,7 @@ function LoaderRoute() {
     <ClientOnly
       fallback={
         <div className="fixed inset-0 z-[10000] flex items-center justify-center" style={{ background: "#000" }}>
-          <div style={{ fontFamily: "Cinzel, serif", fontSize: 28, color: "#d4af37", letterSpacing: "0.3em" }}>
-            THE MAJESTIC BHARAT
-          </div>
+          <img src={logoSrc} alt="The Majestic Bharat" style={{ height: 100, width: "auto" }} />
         </div>
       }
     >
@@ -41,9 +39,7 @@ function LoaderRoute() {
         <Suspense
           fallback={
             <div className="fixed inset-0 z-[10000] flex items-center justify-center" style={{ background: "#000" }}>
-              <div style={{ fontFamily: "Cinzel, serif", fontSize: 28, color: "#d4af37", letterSpacing: "0.3em" }}>
-                THE MAJESTIC BHARAT
-              </div>
+              <img src={logoSrc} alt="The Majestic Bharat" style={{ height: 100, width: "auto" }} />
             </div>
           }
         >
