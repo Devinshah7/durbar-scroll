@@ -66,20 +66,23 @@
 :root {
   --radius: 0.25rem;
 
-  /* Durbar Court palette (oklch equivalents) */
-  --burgundy: oklch(0.28 0.13 18);          /* #5C0A14 */
-  --burgundy-dark: oklch(0.18 0.10 18);     /* #3A0509 */
-  --gold: oklch(0.71 0.13 78);              /* #C8960C */
-  --gold-bright: oklch(0.84 0.15 86);       /* #F0C040 */
-  --gold-pale: oklch(0.92 0.07 90);         /* #F5E4A0 */
-  --indigo: oklch(0.22 0.07 280);           /* #1A1A42 */
-  --saffron: oklch(0.62 0.17 45);           /* #D4600A */
-  --ivory: oklch(0.97 0.03 90);             /* #FDF6E3 */
-  --ink: oklch(0.10 0.01 60);               /* #0D0B08 */
-  --forest: oklch(0.36 0.07 165);           /* #1B4D3E */
-  --smoke: oklch(0.16 0.02 45);             /* #1C1410 */
+  /* ── Varanasi-inspired palette (oklch) ── */
+  --maroon: oklch(0.28 0.10 22);             /* deep maroon #5A1018 */
+  --maroon-deep: oklch(0.17 0.08 20);        /* darkest maroon #3B080C */
+  --gold: oklch(0.72 0.12 80);               /* antique gold #C9A03C */
+  --gold-bright: oklch(0.82 0.14 85);        /* marigold highlight #E8B83A */
+  --gold-pale: oklch(0.91 0.06 88);          /* pale gold #F2E0A8 */
+  --saffron: oklch(0.60 0.18 52);            /* deep saffron #D06418 */
+  --marigold: oklch(0.76 0.16 72);           /* marigold #DCA028 */
+  --terracotta: oklch(0.48 0.12 38);         /* terracotta #944830 */
+  --ivory: oklch(0.96 0.02 85);              /* warm ivory #FAF3E0 */
+  --cream: oklch(0.93 0.03 82);              /* warm cream #EDE4CC */
+  --ink: oklch(0.13 0.02 50);                /* warm charcoal-chocolate #1A1410 */
+  --charcoal: oklch(0.18 0.02 45);           /* warm dark #231C16 */
+  --indigo-subtle: oklch(0.20 0.04 270);     /* very subtle indigo accent #1E1E38 */
+  --smoke: oklch(0.17 0.02 42);              /* warm smoke #201810 */
 
-  /* Map shadcn semantic tokens onto Durbar palette */
+  /* Map shadcn semantic tokens onto Varanasi palette */
   --background: var(--ink);
   --foreground: var(--ivory);
   --card: var(--smoke);
@@ -88,17 +91,24 @@
   --popover-foreground: var(--ivory);
   --primary: var(--gold);
   --primary-foreground: var(--ink);
-  --secondary: var(--burgundy-dark);
+  --secondary: var(--maroon-deep);
   --secondary-foreground: var(--ivory);
   --muted: var(--smoke);
-  --muted-foreground: oklch(0.7 0.03 80);
-  --accent: var(--burgundy);
+  --muted-foreground: oklch(0.68 0.03 75);
+  --accent: var(--maroon);
   --accent-foreground: var(--gold-pale);
   --destructive: oklch(0.55 0.22 25);
   --destructive-foreground: var(--ivory);
-  --border: oklch(0.71 0.13 78 / 0.25);
-  --input: oklch(0.71 0.13 78 / 0.3);
+  --border: oklch(0.72 0.12 80 / 0.25);
+  --input: oklch(0.72 0.12 80 / 0.3);
   --ring: var(--gold);
+
+  /* Section background shorthands for smooth flow */
+  --section-dark: var(--ink);
+  --section-warm-dark: var(--charcoal);
+  --section-maroon: var(--maroon-deep);
+  --section-light: var(--ivory);
+  --section-cream: var(--cream);
 }
 
 @layer base {
