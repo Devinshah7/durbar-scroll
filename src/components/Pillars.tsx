@@ -89,12 +89,12 @@ export function Pillars() {
     <section ref={ref} id="pillars" className="relative overflow-hidden py-28 md:py-36" style={{ background: "linear-gradient(180deg, var(--section-maroon) 0%, var(--section-dark) 20%, var(--section-dark) 100%)" }}>
       <Diyas count={10} />
       <div className="mx-auto max-w-6xl px-6">
-        <FadeUp className="mb-16 text-center">
+        <FadeUp className="mb-20 text-center">
           <p className="eyebrow mb-4">Our Sacred Pillars</p>
           <h2 className="section-heading font-serif-display" style={{ color: "var(--color-gold)" }}>
             The Temple of Excellence
           </h2>
-          <div className="gold-underline mx-auto mt-4" />
+          <div className="heading-flourish mx-auto"><span className="flourish-diamond">◆</span></div>
           <p className="mx-auto mt-6 max-w-xl text-[16px]" style={{ color: "var(--color-gold-pale)", fontStyle: "italic" }}>
             Four pillars upon which every Majestic experience is built
           </p>

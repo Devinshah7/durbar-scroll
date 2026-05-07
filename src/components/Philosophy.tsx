@@ -96,10 +96,10 @@ export function Philosophy() {
           <SplitWords
             as="h2"
             text="An event is never just a gathering."
-            className="font-display italic"
+            className="font-display italic section-heading"
             wordClassName=""
-            // styles
           />
+          <div className="heading-flourish"><span className="flourish-diamond">◆</span></div>
           <div className="my-8 gold-rule">
             <span className="text-base">❖</span>
           </div>
