@@ -36,7 +36,7 @@ export function AnimalCaravan() {
   return (
     <section
       className="relative overflow-hidden py-16 md:py-24"
-      style={{ background: "var(--section-dark)" }}
+      style={{ background: "linear-gradient(180deg, var(--section-cream) 0%, var(--section-light) 30%, var(--section-cream) 100%)" }}
     >
       <div className="mx-auto max-w-[1200px] px-6 text-center">
         <FadeUp>
