@@ -712,6 +712,24 @@ export function GatesPage() {
           0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
           50% { transform: translateY(-4px) rotateX(-1deg) rotateY(0.5deg); }
         }
+        @keyframes gate-glow-pulse {
+          0%, 100% { opacity: 0.15; }
+          50% { opacity: 0.25; }
+        }
+        @keyframes shimmer-sweep {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        @keyframes diya-flicker {
+          0% { transform: scale(1); opacity: 0.8; }
+          100% { transform: scale(1.15); opacity: 1; }
+        }
+        @keyframes spark-rise {
+          0% { transform: translateY(0) scale(1); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 0.5; }
+          100% { transform: translateY(-100vh) scale(0.3); opacity: 0; }
+        }
       `}</style>
     </div>
   );
