@@ -47,11 +47,11 @@ const BRAND_ANIMALS: { brand: string; animal: string; svg: JSX.Element }[] = [
       <svg viewBox="0 0 160 120" className="h-full w-full">
         <g fill="none" strokeLinecap="round" strokeLinejoin="round">
           {/* Tail fan */}
-          {[−40, −25, −10, 5, 20, 35].map((a, i) => (
+          {[-40, -25, -10, 5, 20, 35].map((a, i) => (
             <ellipse key={i} cx="50" cy="70" rx="8" ry="35" fill={i % 2 === 0 ? "var(--color-saffron)" : "var(--color-marigold)"} stroke="var(--color-gold)" strokeWidth="0.6" transform={`rotate(${a} 50 70)`} opacity="0.6" />
           ))}
           {/* Tail eye spots */}
-          {[−30, −10, 10, 30].map((a, i) => (
+          {[-30, -10, 10, 30].map((a, i) => (
             <circle key={i} cx={50 + Math.sin(a * Math.PI / 180) * 28} cy={70 - Math.cos(a * Math.PI / 180) * 28} r="3" fill="var(--color-indigo-subtle)" stroke="var(--color-gold)" strokeWidth="0.5" />
           ))}
           {/* Body */}
