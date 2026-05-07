@@ -21,16 +21,21 @@ export function Philosophy() {
       }
     });
 
+    // Trigger a slow, ceremonial 5-second draw when the section scrolls into view
     const trig = ScrollTrigger.create({
       trigger: "#philosophy",
-      start: "top 90%",
-      end: "top 20%",
-      scrub: 1,
-      onUpdate: (self) => {
-        const progress = self.progress;
-        paths.forEach((p) => {
+      start: "top 85%",
+      once: true,
+      onEnter: () => {
+        paths.forEach((p, i) => {
           const len = (p as any).getTotalLength?.() ?? 0;
-          if (len) p.style.strokeDashoffset = `${len * (1 - progress)}`;
+          if (!len) return;
+          gsap.to(p, {
+            strokeDashoffset: 0,
+            duration: 5,
+            delay: i * 0.12,
+            ease: "cubic-bezier(0.4, 0.0, 0.2, 1)",
+          });
         });
       },
     });
@@ -91,10 +96,10 @@ export function Philosophy() {
           <SplitWords
             as="h2"
             text="An event is never just a gathering."
-            className="font-display italic"
+            className="font-display italic section-heading"
             wordClassName=""
-            // styles
           />
+          <div className="heading-flourish"><span className="flourish-diamond">◆</span></div>
           <div className="my-8 gold-rule">
             <span className="text-base">❖</span>
           </div>
@@ -144,7 +149,6 @@ export function Philosophy() {
 
       <style>{`
         #philosophy-text h2 {
-          font-size: clamp(36px, 5vw, 68px);
           color: var(--color-ivory);
           line-height: 1.05;
         }

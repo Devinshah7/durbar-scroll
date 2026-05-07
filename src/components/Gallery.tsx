@@ -50,15 +50,16 @@ export function Gallery() {
       style={{ background: "linear-gradient(180deg, var(--section-maroon) 0%, var(--section-cream) 12%, var(--section-light) 100%)" }}
     >
       <div className="mx-auto max-w-[1500px] px-6 md:px-10">
-        <div className="mb-14 max-w-3xl">
-          <div className="eyebrow mb-5" style={{ color: "var(--color-burgundy)" }}>
+        <div className="mb-18 max-w-3xl">
+          <div className="eyebrow mb-5" style={{ color: "var(--color-terracotta)" }}>
             Glimpse of Our Work
           </div>
           <SplitWords
             as="h2"
             text="The Work Speaks."
-            className="font-display italic"
+            className="font-display italic section-heading"
           />
+          <div className="heading-flourish" style={{ color: "var(--color-terracotta)" }}><span className="flourish-diamond">◆</span></div>
           <p className="mt-5 max-w-xl text-[16px]" style={{ color: "rgba(13,11,8,0.65)" }}>
             Over 350 events. Each one different. Each one deliberate.
           </p>

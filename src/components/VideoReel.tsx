@@ -34,9 +34,10 @@ export function VideoReel() {
     >
       <Diyas count={8} />
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="mb-14 max-w-3xl">
+        <div className="mb-18 max-w-3xl">
           <div className="eyebrow mb-5">Watch the Experience</div>
-          <SplitWords as="h2" text="See What We Build." className="font-serif-display" />
+          <SplitWords as="h2" text="See What We Build." className="font-serif-display section-heading" />
+          <div className="heading-flourish"><span className="flourish-diamond">◆</span></div>
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 md:gap-6">

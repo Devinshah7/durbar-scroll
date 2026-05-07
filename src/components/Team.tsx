@@ -77,10 +77,10 @@ export function Team() {
       </div>
 
       <div className="relative mx-auto max-w-[1300px] px-6 md:px-10">
-        <div className="mb-16 max-w-3xl">
+        <div className="mb-20 max-w-3xl">
           <div className="eyebrow mb-5">The Core Team</div>
-          <SplitWords as="h2" text="The Minds Behind The Majestic." className="font-serif-display" />
-          <div className="gold-underline mt-4" />
+          <SplitWords as="h2" text="The Minds Behind The Majestic." className="font-serif-display section-heading" />
+          <div className="heading-flourish"><span className="flourish-diamond">◆</span></div>
           <p className="mt-5 text-[16px] font-display italic" style={{ color: "rgba(253,246,227,0.7)" }}>
             Three leaders. Decades of individual mastery across events, business, art & culture.
           </p>
