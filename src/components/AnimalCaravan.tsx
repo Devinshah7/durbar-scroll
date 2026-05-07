@@ -12,15 +12,15 @@ const BRANDS = [
 function BrandMedallion({ brand }: { brand: string }) {
   return (
     <div
-      className="flex-shrink-0 rounded-full border px-5 py-2.5 text-center transition-all duration-500 hover:border-[rgba(201,168,76,0.8)] hover:shadow-[0_0_20px_rgba(201,168,76,0.15)]"
+      className="flex-shrink-0 rounded-full border px-5 py-2.5 text-center transition-all duration-500 hover:border-[rgba(148,72,48,0.8)] hover:shadow-[0_0_20px_rgba(148,72,48,0.15)]"
       style={{
-        borderColor: "rgba(201,168,76,0.35)",
-        background: "rgba(201,168,76,0.06)",
+        borderColor: "rgba(148,72,48,0.4)",
+        background: "rgba(148,72,48,0.08)",
       }}
     >
       <span
         className="text-[11px] font-semibold uppercase tracking-[0.18em] whitespace-nowrap"
-        style={{ color: "var(--color-gold)" }}
+        style={{ color: "var(--color-terracotta)" }}
       >
         {brand}
       </span>
