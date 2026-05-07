@@ -82,7 +82,7 @@ export function VideoReel() {
       </div>
 
       <style>{`
-        section h2 { font-size: clamp(38px, 5vw, 64px); color: var(--color-ivory); }
+        section h2 { font-size: clamp(38px, 5vw, 64px); color: var(--color-ink); }
       `}</style>
 
       {active && (
