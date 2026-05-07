@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { CustomCursor } from "@/components/CustomCursor";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -9,14 +9,18 @@ import { Hero } from "@/components/Hero";
 import { Philosophy } from "@/components/Philosophy";
 import { Pillars } from "@/components/Pillars";
 import { Stats } from "@/components/Stats";
+import { WhyChooseUs } from "@/components/WhyChooseUs";
 import { Gallery } from "@/components/Gallery";
 import { VideoReel } from "@/components/VideoReel";
-import { ClientLogos } from "@/components/ClientLogos";
+import { AnimalCaravan } from "@/components/AnimalCaravan";
+import { AboutExpanded } from "@/components/AboutExpanded";
 import { Team } from "@/components/Team";
 import { Process } from "@/components/Process";
-import { Values } from "@/components/Values";
+import { BlogPreview } from "@/components/BlogPreview";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { FloatingSocial } from "@/components/FloatingSocial";
+import { ComingSoonModal } from "@/components/ComingSoonModal";
 
 export const Route = createFileRoute("/events")({
   component: EventsPage,
@@ -26,7 +30,7 @@ export const Route = createFileRoute("/events")({
       {
         name: "description",
         content:
-          "India's premium experiential partner. 500+ events. Corporate, MICE travel, celebrity management, and culturally-rooted experiences since 2015.",
+          "India's premium experiential partner. 350+ events across 11 countries. MICE, sports, weddings, and celebrity concerts since 2015.",
       },
       { property: "og:title", content: "Events — The Majestic Bharat" },
       {
@@ -39,9 +43,10 @@ export const Route = createFileRoute("/events")({
 
 function EventsPage() {
   const overlayRef = useRef<HTMLDivElement>(null);
+  const [comingSoonOpen, setComingSoonOpen] = useState(false);
+  const [comingSoonPillar, setComingSoonPillar] = useState("Tourism");
 
   useEffect(() => {
-    // Reverse gold fade-in transition from gates
     if (overlayRef.current) {
       gsap.fromTo(
         overlayRef.current,
@@ -52,6 +57,11 @@ function EventsPage() {
       );
     }
   }, []);
+
+  const openComingSoon = (pillar: string) => {
+    setComingSoonPillar(pillar);
+    setComingSoonOpen(true);
+  };
 
   return (
     <>
@@ -66,21 +76,29 @@ function EventsPage() {
       <CustomCursor />
       <SmoothScroll />
       <ScrollProgress />
-      <Navigation logoReveal />
+      <FloatingSocial />
+      <Navigation logoReveal onComingSoon={openComingSoon} />
       <main>
         <Hero />
         <Philosophy />
+        <AboutExpanded />
         <Pillars />
         <Stats />
+        <WhyChooseUs />
         <Gallery />
         <VideoReel />
-        <ClientLogos />
+        <AnimalCaravan />
         <Team />
         <Process />
-        <Values />
+        <BlogPreview />
         <Contact />
       </main>
       <Footer />
+      <ComingSoonModal
+        open={comingSoonOpen}
+        pillarName={comingSoonPillar}
+        onClose={() => setComingSoonOpen(false)}
+      />
     </>
   );
 }
