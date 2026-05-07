@@ -163,12 +163,34 @@
   font-weight: 500;
 }
 
-/* Section heading sizes */
+/* Section heading sizes — majestic & ceremonial */
 .section-heading {
-  font-size: clamp(30px, 5vw, 56px);
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
   font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+}
+
+/* Ornamental flourish divider under headings */
+.heading-flourish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: var(--color-gold);
+}
+.heading-flourish::before,
+.heading-flourish::after {
+  content: "";
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+.heading-flourish .flourish-diamond {
+  font-size: 10px;
+  opacity: 0.8;
 }
 
 /* Gold underline accent for h2 */
