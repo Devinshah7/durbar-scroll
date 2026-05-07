@@ -149,12 +149,19 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
           {/* Right nav */}
           <div className="flex items-center justify-end gap-7">
             <nav className="hidden items-center gap-7 md:flex">
-              {links.slice(3).map((l) => (
-                <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
-                  {l.label}
-                  <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
-                </a>
-              ))}
+              {rightLinks.map((l) =>
+                l.isRoute ? (
+                  <Link key={l.label} to={l.href as any} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
+                    {l.label}
+                    <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
+                  </Link>
+                ) : (
+                  <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
+                    {l.label}
+                    <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
+                  </a>
+                )
+              )}
             </nav>
 
             <a href="#contact" onClick={(e) => handleNav(e, "#contact")} className="hidden md:inline-flex btn-outline-gold !py-2.5 !px-5 !text-[10px] rounded-full">
