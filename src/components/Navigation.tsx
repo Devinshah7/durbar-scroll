@@ -24,7 +24,8 @@ interface NavigationProps {
 export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [revealDone, setRevealDone] = useState(!logoReveal);
+  const introPlayed = typeof window !== "undefined" && sessionStorage.getItem("eventsIntroPlayed") === "true";
+  const [revealDone, setRevealDone] = useState(!logoReveal || introPlayed);
   const [dropdown, setDropdown] = useState(false);
   const logoRef = useRef<HTMLDivElement>(null);
   const overlayLogoRef = useRef<HTMLDivElement>(null);

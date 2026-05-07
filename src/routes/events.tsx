@@ -46,13 +46,21 @@ function EventsPage() {
   const [comingSoonOpen, setComingSoonOpen] = useState(false);
   const [comingSoonPillar, setComingSoonPillar] = useState("Tourism");
 
+  const alreadyPlayed = typeof window !== "undefined" && sessionStorage.getItem("eventsIntroPlayed") === "true";
+
   useEffect(() => {
+    if (alreadyPlayed) {
+      // Skip animation, hide overlay immediately
+      if (overlayRef.current) overlayRef.current.style.display = "none";
+      return;
+    }
     if (overlayRef.current) {
       gsap.fromTo(
         overlayRef.current,
         { opacity: 1 },
         { opacity: 0, duration: 0.6, ease: "power2.out", onComplete: () => {
           if (overlayRef.current) overlayRef.current.style.display = "none";
+          sessionStorage.setItem("eventsIntroPlayed", "true");
         }}
       );
     }
@@ -77,7 +85,7 @@ function EventsPage() {
       <SmoothScroll />
       <ScrollProgress />
       <FloatingSocial />
-      <Navigation logoReveal onComingSoon={openComingSoon} />
+      <Navigation logoReveal={!alreadyPlayed} onComingSoon={openComingSoon} />
       <main>
         <Hero />
         <Philosophy />
