@@ -385,7 +385,7 @@ const BRAND_ANIMALS: { brand: string; animal: string; svg: ReactNode }[] = [
   },
 ];
 
-function AnimalBrandCard({ brand, svg }: { brand: string; animal: string; svg: JSX.Element }) {
+function AnimalBrandCard({ brand, svg }: { brand: string; animal: string; svg: ReactNode }) {
   return (
     <div className="flex-shrink-0 flex flex-col items-center gap-2" style={{ width: "140px" }}>
       <div className="h-[100px] w-[140px]">{svg}</div>
