@@ -2,7 +2,7 @@ export function Footer() {
   return (
     <>
       {/* Final marquee */}
-      <div className="marquee-strip" style={{ background: "var(--color-ink)" }}>
+      <div className="marquee-strip" style={{ background: "var(--section-dark)" }}>
         <div className="marquee-inner" style={{ animationDuration: "60s" }}>
           {Array.from({ length: 2 }).flatMap((_, k) =>
             [
@@ -22,7 +22,7 @@ export function Footer() {
         </div>
       </div>
 
-      <footer className="relative pt-16" style={{ background: "var(--color-ink)" }}>
+      <footer className="relative pt-16" style={{ background: "var(--section-dark)" }}>
         <div className="absolute left-0 right-0 top-0 h-[20px]" style={{ background: `repeating-linear-gradient(90deg, transparent 0 18px, var(--color-gold) 18px 19px, transparent 19px 38px)`, opacity: 0.5 }} />
 
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 pb-12 md:grid-cols-3 md:px-10">
@@ -82,7 +82,7 @@ export function Footer() {
 
         <div
           className="flex flex-col items-center justify-between gap-2 px-6 py-4 text-[10px] uppercase tracking-[0.25em] md:flex-row md:px-10"
-          style={{ background: "var(--color-gold)", color: "var(--color-ink)" }}
+          style={{ background: "linear-gradient(135deg, var(--color-saffron), var(--color-marigold))", color: "var(--section-dark)" }}
         >
           <span>© 2025 The Majestic Bharat. All Rights Reserved.</span>
           <span>Designed with Culture. Executed with Precision.</span>
