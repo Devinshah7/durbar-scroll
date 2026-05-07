@@ -1,8 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { lazy, Suspense, useCallback } from "react";
 import { ClientOnly } from "@/components/ClientOnly";
-
-const CinematicLoaderLazy = lazy(() =>
+import logoSrc from "@/assets/brand/majestic-bharat-logo.png";
   import("@/components/loader/CinematicLoader")
 );
 
