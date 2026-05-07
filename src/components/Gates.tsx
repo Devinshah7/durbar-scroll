@@ -283,6 +283,16 @@ function Nameplate({ title, motif, hovered }: { title: string; motif: string; ho
         </span>
         {/* Side ornament right */}
         <span className="absolute right-3 text-[10px]" style={{ color: "#d4af37", opacity: 0.6 }}>✦</span>
+        {/* Shimmer sweep on hover */}
+        {hovered && (
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.25) 48%, rgba(255,255,255,0.1) 52%, transparent 70%)",
+              animation: "shimmer-sweep 1.8s linear infinite",
+            }}
+          />
+        )}
       </div>
     </div>
   );
