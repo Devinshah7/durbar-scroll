@@ -40,7 +40,7 @@ export function AnimalCaravan() {
     >
       <div className="mx-auto max-w-[1200px] px-6 text-center">
         <FadeUp>
-          <p className="eyebrow mb-3">A Royal Procession of Trusted Partnerships</p>
+          <p className="eyebrow mb-3" style={{ color: "var(--color-terracotta)" }}>A Royal Procession of Trusted Partnerships</p>
           <h2
             className="section-heading font-serif-display"
             style={{ color: "var(--color-ink)", fontSize: "clamp(28px, 4vw, 44px)" }}
