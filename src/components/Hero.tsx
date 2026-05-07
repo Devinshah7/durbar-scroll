@@ -134,17 +134,6 @@ export function Hero() {
           <Diyas count={7} />
         </div>
 
-        {/* Diya orb at the seam */}
-        <div
-          ref={orbRef}
-          className="diya-orb"
-          style={{ left: "40%", top: "50%", transform: "translate(-50%, -50%)" }}
-        >
-          <div className="orb-glow" />
-          <div className="orb-core" />
-          <div className="orb-ring" />
-          <div className="orb-flame" />
-        </div>
 
         {/* Hero overlay text */}
         <div className="pointer-events-none absolute inset-0 flex items-center">
