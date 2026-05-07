@@ -100,7 +100,7 @@ export function Footer() {
           <div>
             <div className="eyebrow mb-5">Contact</div>
             <ul className="space-y-2.5 text-[14px]" style={{ color: "rgba(253,246,227,0.8)" }}>
-              <li>+91 9833122999</li>
+              <li><a href="tel:+919167122999" style={{ color: "inherit", textDecoration: "none" }}>+91 9167122999</a></li>
               <li>connect@themajesticbharat.com</li>
               <li>www.themajesticbharat.com</li>
               <li>Mumbai, India</li>
