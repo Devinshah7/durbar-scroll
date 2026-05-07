@@ -98,7 +98,7 @@ export function AnimalCaravan() {
   return (
     <section
       className="relative overflow-hidden py-12 md:py-16"
-      style={{ background: "#0D0D1A" }}
+      style={{ background: "var(--section-dark)" }}
     >
       {/* Gold horizon line */}
       <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "rgba(201,168,76,0.3)" }} />
