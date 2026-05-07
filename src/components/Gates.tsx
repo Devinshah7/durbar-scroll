@@ -39,62 +39,96 @@ function ArchFrame({ motif, hovered }: { motif: "events" | "celebrity" | "touris
     <svg
       viewBox="0 0 320 540"
       className="absolute inset-0 z-20 h-full w-full"
-      style={{ filter: hovered ? `drop-shadow(0 0 20px ${accent}40)` : "none", transition: "filter 0.4s" }}
+      style={{ filter: hovered ? `drop-shadow(0 0 24px ${accent}50)` : "none", transition: "filter 0.6s" }}
     >
       <defs>
-        <linearGradient id={`pillar-${motif}`} x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={`pillar-${motif}`} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#5c4209" />
+          <stop offset="20%" stopColor="#8b6914" />
+          <stop offset="50%" stopColor="#d4b96a" />
+          <stop offset="80%" stopColor="#8b6914" />
+          <stop offset="100%" stopColor="#5c4209" />
+        </linearGradient>
+        <linearGradient id={`pillar-v-${motif}`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#c8a97e" />
           <stop offset="50%" stopColor="#8b6914" />
           <stop offset="100%" stopColor="#5c4209" />
         </linearGradient>
-        <linearGradient id={`arch-${motif}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#d4af37" />
-          <stop offset="100%" stopColor="#8b6914" />
+        <linearGradient id={`beam-${motif}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#d4b96a" />
+          <stop offset="30%" stopColor="#a88734" />
+          <stop offset="70%" stopColor="#8b6914" />
+          <stop offset="100%" stopColor="#5c4209" />
         </linearGradient>
-        {/* Cusped arch clip path - multifoil Mughal style */}
-        <clipPath id={`cusped-${motif}`}>
+        {/* Clip path for the photo - matches door opening */}
+        <clipPath id={`photo-clip-${motif}`}>
           <path d="
-            M 20 540 L 20 180
-            Q 20 120 50 80
-            Q 65 55 85 40
-            Q 100 32 115 28
-            Q 130 22 145 18
-            Q 155 16 160 15
-            Q 165 16 175 18
-            Q 190 22 205 28
-            Q 220 32 235 40
-            Q 255 55 270 80
-            Q 300 120 300 180
-            L 300 540 Z
+            M 36 540 L 36 180
+            Q 36 130 60 95
+            Q 85 60 120 40
+            Q 140 30 160 27
+            Q 180 30 200 40
+            Q 235 60 260 95
+            Q 284 130 284 180
+            L 284 540 Z
           " />
         </clipPath>
       </defs>
 
-      {/* Left pillar */}
-      <rect x="8" y="140" width="28" height="400" fill={`url(#pillar-${motif})`} rx="2" />
-      <rect x="10" y="140" width="24" height="400" fill="none" stroke="#d4af37" strokeWidth="0.5" opacity="0.4" rx="2" />
+      {/* Golden glow behind the arch */}
+      <ellipse cx="160" cy="180" rx="140" ry="160" fill="none"
+        stroke="#d4af37" strokeWidth="0" opacity="0">
+        <animate attributeName="opacity" values={hovered ? "0.15;0.25;0.15" : "0.05;0.1;0.05"} dur="3s" repeatCount="indefinite" />
+      </ellipse>
+      <ellipse cx="160" cy="200" rx="120" ry="140"
+        fill={`${accent}08`}
+        style={{ filter: "blur(30px)", opacity: hovered ? 0.6 : 0.2, transition: "opacity 0.6s" }}
+      />
+
+      {/* Left pillar - richer with bevel */}
+      <rect x="8" y="140" width="30" height="400" fill={`url(#pillar-${motif})`} rx="2" />
+      {/* Inner bevel highlight */}
+      <rect x="10" y="142" width="4" height="396" fill="rgba(255,230,160,0.15)" rx="1" />
+      {/* Golden rim-light left edge */}
+      <line x1="8" y1="140" x2="8" y2="540" stroke="#d4af37" strokeWidth="0.8" opacity={hovered ? 0.7 : 0.35} style={{ transition: "opacity 0.4s" }} />
+      {/* Golden rim-light right edge */}
+      <line x1="37" y1="140" x2="37" y2="540" stroke="#d4af37" strokeWidth="0.5" opacity={hovered ? 0.5 : 0.2} style={{ transition: "opacity 0.4s" }} />
       {/* Left capital */}
-      <rect x="4" y="130" width="36" height="16" fill={`url(#pillar-${motif})`} rx="3" />
-      <path d="M8 134 Q22 126 36 134" fill="none" stroke="#d4af37" strokeWidth="0.8" opacity="0.6" />
+      <rect x="4" y="130" width="38" height="16" fill={`url(#beam-${motif})`} rx="3" />
+      <rect x="4" y="130" width="38" height="16" fill="none" stroke="#d4af37" strokeWidth="0.5" opacity="0.4" rx="3" />
+      <path d="M8 134 Q23 126 38 134" fill="none" stroke="#d4af37" strokeWidth="0.8" opacity="0.6" />
 
-      {/* Right pillar */}
-      <rect x="284" y="140" width="28" height="400" fill={`url(#pillar-${motif})`} rx="2" />
-      <rect x="286" y="140" width="24" height="400" fill="none" stroke="#d4af37" strokeWidth="0.5" opacity="0.4" rx="2" />
+      {/* Right pillar - richer with bevel */}
+      <rect x="282" y="140" width="30" height="400" fill={`url(#pillar-${motif})`} rx="2" />
+      <rect x="306" y="142" width="4" height="396" fill="rgba(255,230,160,0.15)" rx="1" />
+      <line x1="312" y1="140" x2="312" y2="540" stroke="#d4af37" strokeWidth="0.8" opacity={hovered ? 0.7 : 0.35} style={{ transition: "opacity 0.4s" }} />
+      <line x1="282" y1="140" x2="282" y2="540" stroke="#d4af37" strokeWidth="0.5" opacity={hovered ? 0.5 : 0.2} style={{ transition: "opacity 0.4s" }} />
       {/* Right capital */}
-      <rect x="280" y="130" width="36" height="16" fill={`url(#pillar-${motif})`} rx="3" />
-      <path d="M284 134 Q298 126 312 134" fill="none" stroke="#d4af37" strokeWidth="0.8" opacity="0.6" />
+      <rect x="278" y="130" width="38" height="16" fill={`url(#beam-${motif})`} rx="3" />
+      <rect x="278" y="130" width="38" height="16" fill="none" stroke="#d4af37" strokeWidth="0.5" opacity="0.4" rx="3" />
+      <path d="M282 134 Q297 126 312 134" fill="none" stroke="#d4af37" strokeWidth="0.8" opacity="0.6" />
 
-      {/* Outer arch border - cusped multifoil */}
+      {/* Ornate corner brackets where pillars meet beam */}
+      <g opacity={hovered ? 0.7 : 0.4} style={{ transition: "opacity 0.4s" }}>
+        {/* Top-left bracket */}
+        <path d="M42 146 Q42 135 52 132" fill="none" stroke="#d4af37" strokeWidth="1" />
+        <circle cx="42" cy="146" r="1.5" fill="#d4af37" />
+        {/* Top-right bracket */}
+        <path d="M278 146 Q278 135 268 132" fill="none" stroke="#d4af37" strokeWidth="1" />
+        <circle cx="278" cy="146" r="1.5" fill="#d4af37" />
+      </g>
+
+      {/* Outer arch border */}
       <path
         d="
-          M 20 540 L 20 180
-          Q 20 140 40 105
-          C 55 75, 80 50, 110 35
-          C 130 25, 145 20, 160 17
-          C 175 20, 190 25, 210 35
-          C 240 50, 265 75, 280 105
-          Q 300 140 300 180
-          L 300 540
+          M 36 540 L 36 180
+          Q 36 130 60 95
+          C 75 70, 100 50, 130 38
+          C 145 32, 155 28, 160 27
+          C 165 28, 175 32, 190 38
+          C 220 50, 245 70, 260 95
+          Q 284 130 284 180
+          L 284 540
         "
         fill="none"
         stroke="#d4af37"
@@ -102,22 +136,47 @@ function ArchFrame({ motif, hovered }: { motif: "events" | "celebrity" | "touris
         opacity={hovered ? 1 : 0.7}
         style={{ transition: "opacity 0.4s" }}
       />
+      {/* Thin engraved gold line along inner edge */}
+      <path
+        d="
+          M 40 540 L 40 182
+          Q 40 134 62 100
+          C 78 74, 102 54, 132 42
+          C 146 36, 155 32, 160 31
+          C 165 32, 174 36, 188 42
+          C 218 54, 242 74, 258 100
+          Q 280 134 280 182
+          L 280 540
+        "
+        fill="none"
+        stroke="#d4af37"
+        strokeWidth="0.5"
+        opacity={hovered ? 0.6 : 0.25}
+        style={{ transition: "opacity 0.4s" }}
+      />
 
-      {/* Cusped inner decorative arches (multifoil effect) */}
+      {/* Lotus medallion at apex of arch */}
+      <g transform="translate(160, 20)" opacity={hovered ? 0.9 : 0.5} style={{ transition: "opacity 0.4s" }}>
+        {/* Gem/lotus */}
+        <ellipse cx="0" cy="0" rx="6" ry="5" fill="#d4af37" opacity="0.3" />
+        <path d="M-4 2 Q0 -6 4 2 Q0 -2 -4 2Z" fill="#d4af37" />
+        <path d="M-6 3 Q-3 -3 0 3Z" fill="#d4af37" opacity="0.5" />
+        <path d="M0 3 Q3 -3 6 3Z" fill="#d4af37" opacity="0.5" />
+        <circle cx="0" cy="-2" r="1.5" fill="#ffd700" opacity="0.8" />
+      </g>
+
+      {/* Cusped inner decorative arches */}
       <g opacity={hovered ? 0.6 : 0.3} style={{ transition: "opacity 0.4s" }}>
-        {/* Small cusps along the arch */}
         {[0, 1, 2, 3, 4, 5, 6].map((i) => {
           const t = (i + 1) / 8;
-          const cx = 20 + (300 - 20) * t;
-          const cy = 180 - Math.sin(t * Math.PI) * 145;
+          const cx = 36 + (284 - 36) * t;
+          const cy = 180 - Math.sin(t * Math.PI) * 130;
           return (
             <g key={i}>
-              <circle cx={cx} cy={cy + 8} r="6" fill="none" stroke="#d4af37" strokeWidth="0.6" />
+              <circle cx={cx} cy={cy + 8} r="5" fill="none" stroke="#d4af37" strokeWidth="0.6" />
               <path
-                d={`M${cx - 4} ${cy + 14} Q${cx} ${cy + 6} ${cx + 4} ${cy + 14}`}
-                fill="none"
-                stroke="#d4af37"
-                strokeWidth="0.5"
+                d={`M${cx - 3} ${cy + 13} Q${cx} ${cy + 7} ${cx + 3} ${cy + 13}`}
+                fill="none" stroke="#d4af37" strokeWidth="0.4"
               />
             </g>
           );
@@ -126,78 +185,48 @@ function ArchFrame({ motif, hovered }: { motif: "events" | "celebrity" | "touris
 
       {/* Finials at top */}
       <g opacity={hovered ? 0.8 : 0.5} style={{ transition: "opacity 0.4s" }}>
-        {/* Center finial (lotus bud) */}
-        <path d="M156 12 Q160 2 164 12 Q160 8 156 12Z" fill="#d4af37" />
-        <circle cx="160" cy="4" r="2.5" fill="#d4af37" />
-        {/* Side finials */}
+        <path d="M156 8 Q160 -2 164 8 Q160 4 156 8Z" fill="#d4af37" />
+        <circle cx="160" cy="0" r="2.5" fill="#d4af37" />
         <circle cx="80" cy="52" r="2" fill="#d4af37" opacity="0.6" />
         <circle cx="240" cy="52" r="2" fill="#d4af37" opacity="0.6" />
       </g>
 
-      {/* Filigree patterns - lotus motifs in spandrels */}
+      {/* Filigree lotus motifs in spandrels */}
       <g opacity={hovered ? 0.5 : 0.2} style={{ transition: "opacity 0.4s" }}>
-        {/* Left spandrel lotus */}
-        <path d="M35 160 Q50 145 65 160 Q50 155 35 160Z" fill="none" stroke="#d4af37" strokeWidth="0.5" />
-        <path d="M35 180 Q50 165 65 180 Q50 175 35 180Z" fill="none" stroke="#d4af37" strokeWidth="0.5" />
-        {/* Right spandrel lotus */}
-        <path d="M255 160 Q270 145 285 160 Q270 155 255 160Z" fill="none" stroke="#d4af37" strokeWidth="0.5" />
-        <path d="M255 180 Q270 165 285 180 Q270 175 255 180Z" fill="none" stroke="#d4af37" strokeWidth="0.5" />
+        <path d="M42 160 Q55 145 68 160 Q55 155 42 160Z" fill="none" stroke="#d4af37" strokeWidth="0.5" />
+        <path d="M42 180 Q55 165 68 180 Q55 175 42 180Z" fill="none" stroke="#d4af37" strokeWidth="0.5" />
+        <path d="M252 160 Q265 145 278 160 Q265 155 252 160Z" fill="none" stroke="#d4af37" strokeWidth="0.5" />
+        <path d="M252 180 Q265 165 278 180 Q265 175 252 180Z" fill="none" stroke="#d4af37" strokeWidth="0.5" />
       </g>
 
       {/* Theme-specific motifs */}
       {motif === "events" && (
         <g opacity={hovered ? 0.6 : 0.25} style={{ transition: "opacity 0.4s" }}>
-          {/* Spotlight rays at top */}
           {[-20, -10, 0, 10, 20].map((deg) => (
-            <line
-              key={deg}
-              x1="160" y1="30"
-              x2={160 + Math.sin(deg * Math.PI / 180) * 60}
-              y2={30 + Math.cos(deg * Math.PI / 180) * 40}
-              stroke={accent}
-              strokeWidth="0.4"
-              opacity="0.5"
-            />
+            <line key={deg} x1="160" y1="30" x2={160 + Math.sin(deg * Math.PI / 180) * 60} y2={30 + Math.cos(deg * Math.PI / 180) * 40} stroke={accent} strokeWidth="0.4" opacity="0.5" />
           ))}
         </g>
       )}
       {motif === "celebrity" && (
         <g opacity={hovered ? 0.6 : 0.25} style={{ transition: "opacity 0.4s" }}>
-          {/* Stars */}
           {[[60, 70], [260, 70], [160, 25]].map(([cx, cy], i) => (
-            <polygon
-              key={i}
-              points={`${cx},${cy! - 5} ${cx! + 2},${cy! - 1} ${cx! + 5},${cy} ${cx! + 2},${cy! + 1} ${cx},${cy! + 5} ${cx! - 2},${cy! + 1} ${cx! - 5},${cy} ${cx! - 2},${cy! - 1}`}
-              fill={accent}
-              opacity="0.7"
-            />
+            <polygon key={i} points={`${cx},${cy! - 5} ${cx! + 2},${cy! - 1} ${cx! + 5},${cy} ${cx! + 2},${cy! + 1} ${cx},${cy! + 5} ${cx! - 2},${cy! + 1} ${cx! - 5},${cy} ${cx! - 2},${cy! - 1}`} fill={accent} opacity="0.7" />
           ))}
         </g>
       )}
       {motif === "tourism" && (
         <g opacity={hovered ? 0.6 : 0.25} style={{ transition: "opacity 0.4s" }}>
-          {/* Jaali pattern */}
           {[0, 1, 2].map((i) => (
             <g key={i}>
-              <rect
-                x={30 + i * 8} y={160 + i * 12}
-                width="8" height="8"
-                fill="none" stroke="#d4af37" strokeWidth="0.3"
-                transform={`rotate(45 ${34 + i * 8} ${164 + i * 12})`}
-              />
-              <rect
-                x={278 - i * 8} y={160 + i * 12}
-                width="8" height="8"
-                fill="none" stroke="#d4af37" strokeWidth="0.3"
-                transform={`rotate(45 ${282 - i * 8} ${164 + i * 12})`}
-              />
+              <rect x={42 + i * 8} y={160 + i * 12} width="8" height="8" fill="none" stroke="#d4af37" strokeWidth="0.3" transform={`rotate(45 ${46 + i * 8} ${164 + i * 12})`} />
+              <rect x={270 - i * 8} y={160 + i * 12} width="8" height="8" fill="none" stroke="#d4af37" strokeWidth="0.3" transform={`rotate(45 ${274 - i * 8} ${164 + i * 12})`} />
             </g>
           ))}
         </g>
       )}
 
       {/* Inner shadow edges for recess depth */}
-      <rect x="36" y="146" width="248" height="394" fill="none" stroke="rgba(0,0,0,0.3)" strokeWidth="4" rx="2" clipPath={`url(#cusped-${motif})`} />
+      <rect x="40" y="146" width="240" height="394" fill="none" stroke="rgba(0,0,0,0.3)" strokeWidth="4" rx="2" clipPath={`url(#photo-clip-${motif})`} />
     </svg>
   );
 }
