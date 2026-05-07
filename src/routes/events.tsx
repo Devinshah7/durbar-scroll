@@ -85,7 +85,7 @@ function EventsPage() {
       <SmoothScroll />
       <ScrollProgress />
       <FloatingSocial />
-      <Navigation logoReveal onComingSoon={openComingSoon} />
+      <Navigation logoReveal={!alreadyPlayed} onComingSoon={openComingSoon} />
       <main>
         <Hero />
         <Philosophy />
