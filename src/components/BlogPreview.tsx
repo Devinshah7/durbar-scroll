@@ -32,7 +32,7 @@ export { BLOGS };
 
 export function BlogPreview() {
   return (
-    <section className="relative overflow-hidden py-24 md:py-32" style={{ background: "linear-gradient(180deg, var(--section-light) 0%, var(--section-dark) 12%, var(--section-dark) 100%)" }}>
+    <section className="relative overflow-hidden py-24 md:py-32" style={{ background: "linear-gradient(180deg, var(--section-maroon) 0%, var(--section-warm-dark) 30%, var(--section-warm-dark) 100%)" }}>
       <div className="relative mx-auto max-w-[1300px] px-6 md:px-10">
         <FadeUp className="mb-14 text-center">
           <p className="eyebrow mb-4">Stories from the Soul of India</p>

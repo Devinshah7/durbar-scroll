@@ -21,7 +21,7 @@ const WHY_US = [
 
 export function WhyChooseUs() {
   return (
-    <section className="relative overflow-hidden py-24 md:py-32" style={{ background: "linear-gradient(180deg, var(--section-dark) 0%, var(--section-maroon) 20%, var(--section-maroon) 100%)" }}>
+    <section className="relative overflow-hidden py-24 md:py-32" style={{ background: "linear-gradient(180deg, var(--section-warm-dark) 0%, var(--section-terracotta) 30%, var(--section-cream) 100%)" }}>
       <Diyas count={8} />
       <div className="relative mx-auto max-w-[1200px] px-6 md:px-10">
         <FadeUp className="mb-14 text-center">

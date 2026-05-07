@@ -47,7 +47,7 @@ const VALUES_LIST = [
 
 export function AboutExpanded() {
   return (
-    <section className="relative overflow-hidden py-24 md:py-36" style={{ background: "var(--section-maroon)" }}>
+    <section className="relative overflow-hidden py-24 md:py-36" style={{ background: "linear-gradient(180deg, var(--section-maroon) 0%, var(--section-maroon) 60%, var(--section-terracotta) 100%)" }}>
       <Diyas count={10} />
       <div className="relative mx-auto max-w-[1200px] px-6 md:px-10">
         <FadeUp className="mb-10">

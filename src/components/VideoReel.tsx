@@ -30,7 +30,7 @@ export function VideoReel() {
   return (
     <section
       className="relative overflow-hidden py-24 md:py-32"
-      style={{ background: "linear-gradient(180deg, var(--section-light) 0%, var(--section-warm-dark) 12%, var(--section-warm-dark) 100%)" }}
+      style={{ background: "linear-gradient(180deg, var(--section-light) 0%, var(--section-cream) 40%, var(--section-cream) 100%)" }}
     >
       <Diyas count={8} />
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">

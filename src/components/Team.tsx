@@ -69,7 +69,7 @@ export function Team() {
   );
 
   return (
-    <section id="team" ref={ref} className="relative overflow-hidden py-24 md:py-32" style={{ background: "var(--section-warm-dark)" }}>
+    <section id="team" ref={ref} className="relative overflow-hidden py-24 md:py-32" style={{ background: "linear-gradient(180deg, var(--section-cream) 0%, var(--section-warm-dark) 25%, var(--section-warm-dark) 100%)" }}>
       <div className="pointer-events-none absolute inset-0">
         {stars.map((s, i) => (
           <span key={i} className="absolute rounded-full" style={{ top: s.top, left: s.left, width: s.size, height: s.size, background: "var(--color-gold-pale)", opacity: s.opacity }} />
