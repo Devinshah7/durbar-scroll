@@ -102,12 +102,19 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
         <div className="mx-auto grid max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center px-6 md:px-10">
           {/* Left nav */}
           <nav className="hidden items-center gap-7 md:flex">
-            {links.slice(0, 2).map((l) => (
-              <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
-                {l.label}
-                <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
-              </a>
-            ))}
+            {leftLinks.map((l) =>
+              l.isRoute ? (
+                <Link key={l.label} to={l.href as any} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
+                  {l.label}
+                  <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
+                </Link>
+              ) : (
+                <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
+                  {l.label}
+                  <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
+                </a>
+              )
+            )}
             {/* Services dropdown */}
             <div className="relative" onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
               <button className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
