@@ -610,6 +610,8 @@ function Gate({ gate, index, onComingSoon }: { gate: typeof GATES[0]; index: num
 
 export function GatesPage() {
   const headingRef = useRef<HTMLDivElement>(null);
+  const [comingSoonOpen, setComingSoonOpen] = useState(false);
+  const [comingSoonPillar, setComingSoonPillar] = useState("Tourism");
 
   useEffect(() => {
     if (!headingRef.current) return;
@@ -631,58 +633,36 @@ export function GatesPage() {
       </span>
     ));
 
+  const handleComingSoon = (pillar: string) => {
+    setComingSoonPillar(pillar);
+    setComingSoonOpen(true);
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden" style={{ background: "linear-gradient(180deg, #0d0820 0%, #1a0a0a 50%, #2a0d0d 100%)" }}>
-      {/* Background layers */}
       <div className="gates-bg absolute inset-0">
         <JaliPattern />
         <DiyaSparks />
       </div>
 
-      {/* Heading */}
       <div ref={headingRef} className="relative z-10 pt-20 text-center">
-        <h1
-          style={{
-            fontFamily: "Cinzel, serif",
-            fontSize: "clamp(32px, 5vw, 56px)",
-            color: "#d4af37",
-            letterSpacing: "0.25em",
-            textTransform: "uppercase",
-          }}
-        >
+        <h1 style={{ fontFamily: "Cinzel, serif", fontSize: "clamp(32px, 5vw, 56px)", color: "#d4af37", letterSpacing: "0.25em", textTransform: "uppercase" }}>
           {splitText("CHOOSE YOUR JOURNEY")}
         </h1>
-        <p
-          className="mx-auto mt-4 max-w-xl animate-fade-in"
-          style={{
-            fontFamily: "Cormorant Garamond, serif",
-            fontStyle: "italic",
-            fontSize: "clamp(16px, 2vw, 20px)",
-            color: "#e8c87a",
-            animationDelay: "0.6s",
-            animationFillMode: "both",
-          }}
-        >
+        <p className="mx-auto mt-4 max-w-xl animate-fade-in" style={{ fontFamily: "Cormorant Garamond, serif", fontStyle: "italic", fontSize: "clamp(16px, 2vw, 20px)", color: "#e8c87a", animationDelay: "0.6s", animationFillMode: "both" }}>
           Three sacred gates. Three realms of Bharat. One unforgettable path.
         </p>
       </div>
 
-      {/* Gates */}
       <div className="relative z-10 flex min-h-[70vh] items-center justify-center gap-8 px-6 py-12 max-lg:gap-6 max-md:flex-col max-md:gap-8">
         {GATES.map((gate, i) => (
-          <Gate key={gate.title} gate={gate} index={i} />
+          <Gate key={gate.title} gate={gate} index={i} onComingSoon={handleComingSoon} />
         ))}
       </div>
 
-      {/* Gold fade overlay for transition */}
-      <div
-        id="gate-gold-overlay"
-        className="pointer-events-none fixed inset-0 z-[10000]"
-        style={{
-          background: "radial-gradient(circle at center, rgba(255,215,0,1) 0%, rgba(255,140,0,0.8) 40%, rgba(26,10,10,0) 80%)",
-          opacity: 0,
-        }}
-      />
+      <div id="gate-gold-overlay" className="pointer-events-none fixed inset-0 z-[10000]" style={{ background: "radial-gradient(circle at center, rgba(255,215,0,1) 0%, rgba(255,140,0,0.8) 40%, rgba(26,10,10,0) 80%)", opacity: 0 }} />
+
+      <ComingSoonModal open={comingSoonOpen} pillarName={comingSoonPillar} onClose={() => setComingSoonOpen(false)} />
 
       <style>{`
         @keyframes gate-breathe {
