@@ -7,6 +7,7 @@ import * as THREE from "three";
 import gsap from "gsap";
 import Earth from "./Earth";
 import EmberParticles from "./EmberParticles";
+import { Logo } from "@/components/Logo";
 
 type Phase = 0 | 1 | 2 | 3 | 4;
 
@@ -244,22 +245,7 @@ export default function CinematicLoader({ onComplete }: Props) {
               animation: "logo-rise 1s cubic-bezier(0.2,0.8,0.2,1) forwards",
             }}
           >
-            <div
-              className="flex items-center justify-center"
-              style={{
-                fontFamily: "Cinzel, serif",
-                fontSize: "clamp(2.5rem, 7vw, 5.5rem)",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                color: "#d4af37",
-                textShadow: "0 0 40px rgba(255,210,122,0.6), 0 0 80px rgba(212,175,55,0.4)",
-              }}
-            >
-              <span style={{ marginRight: "0.4em", position: "relative", top: "-0.15em", fontSize: "0.6em" }}>
-                M°
-              </span>
-              <span>THE MAJESTIC BHARAT</span>
-            </div>
+            <Logo height={140} glow />
           </div>
           <p
             className="mt-6 text-center"

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { Logo } from "@/components/Logo";
 
 export function Loader() {
   const ref = useRef<HTMLDivElement>(null);
@@ -31,8 +32,7 @@ export function Loader() {
   return (
     <div ref={ref} className="fixed inset-0 z-[10000] flex flex-col items-center justify-center" style={{ backgroundColor: "#000" }}>
       <div id="loader-logo" className="flex flex-col items-center" style={{ opacity: 0 }}>
-        <div className="font-display mb-2 text-6xl font-bold italic md:text-7xl" style={{ color: "var(--color-gold)" }}>M°</div>
-        <div className="font-display text-2xl tracking-[0.35em] md:text-3xl" style={{ color: "var(--color-gold-pale)" }}>THE MAJESTIC BHARAT</div>
+        <Logo height={100} glow />
       </div>
       <div id="loader-tagline" className="absolute text-[10px] uppercase tracking-[0.4em]" style={{ color: "var(--color-gold)", opacity: 0, top: "60%" }}>
         Where Every Experience is a Sacred Journey

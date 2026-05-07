@@ -35,13 +35,24 @@ export const Route = createRootRoute({
       { property: "og:title", content: "The Majestic Bharat" },
       { property: "og:description", content: "A Blend of Culture through Events & Tourism." },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "/brand/majestic-bharat-logo.png" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:image", content: "/brand/majestic-bharat-logo.png" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/brand/majestic-bharat-logo.png",
+      },
+      {
+        rel: "apple-touch-icon",
+        href: "/brand/majestic-bharat-logo.png",
       },
     ],
   }),

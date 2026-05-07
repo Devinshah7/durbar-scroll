@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { Logo } from "@/components/Logo";
 
 const links = [
   { label: "About", href: "#philosophy" },
@@ -77,10 +78,7 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
                 <div key={i} className="absolute rounded-full" style={{ width: 2 + Math.random() * 3, height: 2 + Math.random() * 3, left: `calc(50% + ${Math.cos(angle) * r}px)`, top: `calc(50% + ${Math.sin(angle) * r}px)`, background: "#ffd27a", boxShadow: "0 0 6px #ffd27a", animation: `diya-flicker ${0.3 + Math.random() * 0.4}s ease-in-out infinite alternate`, animationDelay: `${Math.random() * 2}s` }} />
               );
             })}
-            <div className="relative flex items-center justify-center" style={{ fontFamily: "Cinzel, serif", fontSize: "clamp(2rem, 6vw, 4.5rem)", fontWeight: 700, letterSpacing: "0.08em", color: "#d4af37", textShadow: "0 0 40px rgba(255,210,122,0.6), 0 0 80px rgba(212,175,55,0.4)" }}>
-              <span style={{ marginRight: "0.3em", position: "relative", top: "-0.1em", fontSize: "0.6em" }}>M°</span>
-              <span>THE MAJESTIC BHARAT</span>
-            </div>
+            <Logo height={120} glow />
             <p className="mt-4 text-center" style={{ fontFamily: "Cormorant Garamond, serif", fontStyle: "italic", color: "#e8c87a", letterSpacing: "0.2em", textTransform: "uppercase", fontSize: "clamp(0.65rem, 1.2vw, 0.85rem)" }}>
               Where Every Experience Becomes A Sacred Journey
             </p>
@@ -131,9 +129,8 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
 
           {/* Center logo */}
           <div ref={logoRef} className="flex justify-center">
-            <a href="#top" onClick={(e) => handleNav(e, "#top")} className="flex flex-col items-center gap-1" style={{ filter: "drop-shadow(0 0 12px rgba(212,175,55,0.35))" }}>
-              <span className="font-display leading-none" style={{ color: "var(--color-gold)", fontSize: "clamp(2rem, 3.5vw, 2.8rem)" }}>M°</span>
-              <span className="text-[9px] font-medium tracking-[0.32em]" style={{ color: "var(--color-gold-pale)" }}>THE MAJESTIC BHARAT</span>
+            <a href="#top" onClick={(e) => handleNav(e, "#top")}>
+              <Logo height={48} glow />
             </a>
           </div>
 

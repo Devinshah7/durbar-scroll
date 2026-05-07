@@ -1,3 +1,5 @@
+import { Logo } from "@/components/Logo";
+
 export function Footer() {
   return (
     <>
@@ -27,10 +29,7 @@ export function Footer() {
 
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 pb-12 md:grid-cols-3 md:px-10">
           <div>
-            <div className="flex items-center gap-3">
-              <span className="font-display text-4xl leading-none" style={{ color: "var(--color-gold)" }}>M°</span>
-              <span className="text-[10px] tracking-[0.32em]" style={{ color: "var(--color-gold-pale)" }}>THE MAJESTIC BHARAT</span>
-            </div>
+            <Logo height={56} glow />
             <p className="mt-6 max-w-xs font-display italic" style={{ color: "var(--color-gold-pale)", fontSize: "18px" }}>
               A Blend of Culture through Events & Tourism.
             </p>
