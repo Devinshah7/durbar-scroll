@@ -182,12 +182,19 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
         className={`fixed inset-0 z-[999] flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
         style={{ background: "var(--section-maroon)" }}
       >
-        {links.map((l, i) => (
-          <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="font-display text-4xl italic"
-            style={{ color: "var(--color-gold-pale)", transform: open ? "translateX(0)" : "translateX(-30px)", opacity: open ? 1 : 0, transition: `all 0.4s ease ${i * 0.07 + 0.1}s` }}>
-            {l.label}
-          </a>
-        ))}
+        {[...leftLinks, { label: "Services", href: "#pillars", isRoute: false }, ...rightLinks].map((l, i) =>
+          l.isRoute ? (
+            <Link key={l.label} to={l.href as any} onClick={() => setOpen(false)} className="font-display text-4xl italic"
+              style={{ color: "var(--color-gold-pale)", transform: open ? "translateX(0)" : "translateX(-30px)", opacity: open ? 1 : 0, transition: `all 0.4s ease ${i * 0.07 + 0.1}s` }}>
+              {l.label}
+            </Link>
+          ) : (
+            <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="font-display text-4xl italic"
+              style={{ color: "var(--color-gold-pale)", transform: open ? "translateX(0)" : "translateX(-30px)", opacity: open ? 1 : 0, transition: `all 0.4s ease ${i * 0.07 + 0.1}s` }}>
+              {l.label}
+            </a>
+          )
+        )}
         {/* Mobile coming soon links */}
         <button onClick={() => { setOpen(false); onComingSoon?.("Tourism"); }} className="font-display text-2xl italic" style={{ color: "rgba(253,246,227,0.4)" }}>
           Tourism <span className="text-sm">(Coming Soon)</span>
