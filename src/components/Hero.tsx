@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Diyas } from "@/lib/diyas";
 import heroLeft from "@/assets/hero-left.jpg";
