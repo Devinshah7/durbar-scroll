@@ -247,7 +247,7 @@
 .marquee-strip {
   width: 100%;
   overflow: hidden;
-  background: var(--color-gold);
+  background: linear-gradient(135deg, var(--color-saffron), var(--color-marigold));
   padding: 14px 0;
   border-top: 1px solid oklch(1 0 0 / 0.2);
   border-bottom: 1px solid oklch(1 0 0 / 0.2);
