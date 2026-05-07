@@ -65,13 +65,13 @@ export function VideoReel() {
               <div className="mt-4">
                 <div
                   className="text-[10px] font-semibold uppercase tracking-[0.3em]"
-                  style={{ color: "var(--color-gold)" }}
+                  style={{ color: "var(--color-terracotta)" }}
                 >
                   {v.category}
                 </div>
                 <h3
                   className="mt-2 font-serif-display"
-                  style={{ color: "var(--color-ivory)", fontSize: "20px" }}
+                  style={{ color: "var(--color-ink)", fontSize: "20px" }}
                 >
                   {v.title}
                 </h3>
