@@ -66,7 +66,7 @@ function EventsPage() {
       <CustomCursor />
       <SmoothScroll />
       <ScrollProgress />
-      <Navigation />
+      <Navigation logoReveal />
       <main>
         <Hero />
         <Philosophy />
