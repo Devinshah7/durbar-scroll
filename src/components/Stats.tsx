@@ -45,7 +45,7 @@ export function Stats() {
     <section
       ref={ref}
       className="relative overflow-hidden py-20 md:py-28"
-      style={{ background: "var(--color-gold)" }}
+      style={{ background: "linear-gradient(135deg, var(--color-saffron), var(--color-marigold))" }}
     >
       <div className="mx-auto mb-16 flex max-w-[1100px] items-center px-6 md:px-10">
         <span className="h-px flex-1" style={{ background: "var(--color-ink)" }} />

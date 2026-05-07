@@ -86,7 +86,7 @@ export function Pillars() {
   }, []);
 
   return (
-    <section ref={ref} id="pillars" className="relative overflow-hidden py-28 md:py-36" style={{ background: "linear-gradient(180deg, #0a0510 0%, var(--color-ink) 100%)" }}>
+    <section ref={ref} id="pillars" className="relative overflow-hidden py-28 md:py-36" style={{ background: "linear-gradient(180deg, var(--section-maroon) 0%, var(--section-dark) 20%, var(--section-dark) 100%)" }}>
       <Diyas count={10} />
       <div className="mx-auto max-w-6xl px-6">
         <FadeUp className="mb-16 text-center">
