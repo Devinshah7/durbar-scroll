@@ -60,7 +60,7 @@ export function Gallery() {
             className="font-display italic"
           />
           <p className="mt-5 max-w-xl text-[16px]" style={{ color: "rgba(13,11,8,0.65)" }}>
-            Over 500 events. Each one different. Each one deliberate.
+            Over 350 events. Each one different. Each one deliberate.
           </p>
         </div>
 

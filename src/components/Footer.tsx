@@ -3,10 +3,7 @@ export function Footer() {
     <>
       {/* Final marquee */}
       <div className="marquee-strip" style={{ background: "var(--color-ink)" }}>
-        <div
-          className="marquee-inner"
-          style={{ animationDuration: "60s" }}
-        >
+        <div className="marquee-inner" style={{ animationDuration: "60s" }}>
           {Array.from({ length: 2 }).flatMap((_, k) =>
             [
               "❖ THE MAJESTIC BHARAT",
@@ -16,71 +13,45 @@ export function Footer() {
               "CELEBRITIES",
               "ATITHI DEVO BHAVA",
               "EST. 2015",
+              "350+ EVENTS",
+              "11 COUNTRIES",
             ].map((t, i) => (
-              <span
-                key={`${k}-${i}`}
-                style={{ color: "var(--color-gold)" }}
-              >
-                {t}
-              </span>
+              <span key={`${k}-${i}`} style={{ color: "var(--color-gold)" }}>{t}</span>
             )),
           )}
         </div>
       </div>
 
-      <footer
-        className="relative pt-16"
-        style={{ background: "var(--color-ink)" }}
-      >
-        {/* Kolam border */}
-        <div
-          className="absolute left-0 right-0 top-0 h-[20px]"
-          style={{
-            background: `repeating-linear-gradient(90deg, transparent 0 18px, var(--color-gold) 18px 19px, transparent 19px 38px)`,
-            opacity: 0.5,
-          }}
-        />
+      <footer className="relative pt-16" style={{ background: "var(--color-ink)" }}>
+        <div className="absolute left-0 right-0 top-0 h-[20px]" style={{ background: `repeating-linear-gradient(90deg, transparent 0 18px, var(--color-gold) 18px 19px, transparent 19px 38px)`, opacity: 0.5 }} />
 
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 pb-12 md:grid-cols-3 md:px-10">
           <div>
             <div className="flex items-center gap-3">
-              <span
-                className="font-display text-4xl leading-none"
-                style={{ color: "var(--color-gold)" }}
-              >
-                M°
-              </span>
-              <span
-                className="text-[10px] tracking-[0.32em]"
-                style={{ color: "var(--color-gold-pale)" }}
-              >
-                THE MAJESTIC BHARAT
-              </span>
+              <span className="font-display text-4xl leading-none" style={{ color: "var(--color-gold)" }}>M°</span>
+              <span className="text-[10px] tracking-[0.32em]" style={{ color: "var(--color-gold-pale)" }}>THE MAJESTIC BHARAT</span>
             </div>
-            <p
-              className="mt-6 max-w-xs font-display italic"
-              style={{ color: "var(--color-gold-pale)", fontSize: "18px" }}
-            >
+            <p className="mt-6 max-w-xs font-display italic" style={{ color: "var(--color-gold-pale)", fontSize: "18px" }}>
               A Blend of Culture through Events & Tourism.
             </p>
-            <p
-              className="mt-3 text-[13px] leading-[1.7]"
-              style={{ color: "rgba(253,246,227,0.55)" }}
-            >
-              India's premium experiential partner since 2015.
+            <p className="mt-3 text-[13px] leading-[1.7]" style={{ color: "rgba(253,246,227,0.55)" }}>
+              India's premium experiential partner since 2015. 350+ events across 11 countries.
             </p>
             <div className="mt-5 flex gap-2.5">
-              {["IG", "in", "▶"].map((s) => (
+              {[
+                { label: "IG", href: "https://www.instagram.com/tmb_events2015/" },
+                { label: "in", href: "https://www.linkedin.com/company/themajesticbharat/" },
+                { label: "▶", href: "https://youtube.com/@themajesticbharat_tmb?si=qRIBvHadpV1pVxVF" },
+              ].map((s) => (
                 <a
-                  key={s}
-                  href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border text-[11px]"
-                  style={{
-                    borderColor: "rgba(200,150,12,0.5)",
-                    color: "var(--color-gold)",
-                  }}
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border text-[11px] transition-all hover:bg-[var(--color-gold)] hover:text-[var(--color-ink)]"
+                  style={{ borderColor: "rgba(200,150,12,0.5)", color: "var(--color-gold)" }}
                 >
-                  {s}
+                  {s.label}
                 </a>
               ))}
             </div>
@@ -94,6 +65,7 @@ export function Footer() {
               <li><a href="#gallery">Our Work</a></li>
               <li><a href="#team">The Team</a></li>
               <li><a href="#contact">Connect With Us</a></li>
+              <li><a href="/blogs" style={{ color: "var(--color-gold)" }}>Blogs</a></li>
             </ul>
           </div>
 
@@ -108,13 +80,9 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom strip */}
         <div
           className="flex flex-col items-center justify-between gap-2 px-6 py-4 text-[10px] uppercase tracking-[0.25em] md:flex-row md:px-10"
-          style={{
-            background: "var(--color-gold)",
-            color: "var(--color-ink)",
-          }}
+          style={{ background: "var(--color-gold)", color: "var(--color-ink)" }}
         >
           <span>© 2025 The Majestic Bharat. All Rights Reserved.</span>
           <span>Designed with Culture. Executed with Precision.</span>

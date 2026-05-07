@@ -138,11 +138,35 @@
 
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: 10px;
-  letter-spacing: 0.35em;
+  font-size: 12px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-gold);
   font-weight: 500;
+}
+
+/* Section heading sizes */
+.section-heading {
+  font-size: clamp(30px, 5vw, 56px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* Gold underline accent for h2 */
+.gold-underline {
+  width: 40px;
+  height: 2px;
+  background: #C9A84C;
+}
+
+/* Quote callouts */
+.quote-callout {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 22px;
+  border-left: 3px solid var(--color-gold);
+  padding-left: 16px;
 }
 
 /* ============================================================

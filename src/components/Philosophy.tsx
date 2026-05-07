@@ -127,7 +127,7 @@ export function Philosophy() {
                 className="font-display"
                 style={{ color: "var(--color-gold)", fontSize: "92px", lineHeight: 0.9 }}
               >
-                10
+                20+
               </span>
               <span
                 className="text-[12px] uppercase tracking-[0.25em]"
