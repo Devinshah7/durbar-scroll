@@ -30,12 +30,12 @@ export function VideoReel() {
   return (
     <section
       className="relative overflow-hidden py-24 md:py-32"
-      style={{ background: "linear-gradient(180deg, var(--section-light) 0%, var(--section-warm-dark) 12%, var(--section-warm-dark) 100%)" }}
+      style={{ background: "linear-gradient(180deg, var(--section-light) 0%, var(--section-cream) 40%, var(--section-cream) 100%)" }}
     >
       <Diyas count={8} />
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-18 max-w-3xl">
-          <div className="eyebrow mb-5">Watch the Experience</div>
+          <div className="eyebrow mb-5" style={{ color: "var(--color-terracotta)" }}>Watch the Experience</div>
           <SplitWords as="h2" text="See What We Build." className="font-serif-display section-heading" />
           <div className="heading-flourish"><span className="flourish-diamond">◆</span></div>
         </div>
@@ -65,13 +65,13 @@ export function VideoReel() {
               <div className="mt-4">
                 <div
                   className="text-[10px] font-semibold uppercase tracking-[0.3em]"
-                  style={{ color: "var(--color-gold)" }}
+                  style={{ color: "var(--color-terracotta)" }}
                 >
                   {v.category}
                 </div>
                 <h3
                   className="mt-2 font-serif-display"
-                  style={{ color: "var(--color-ivory)", fontSize: "20px" }}
+                  style={{ color: "var(--color-ink)", fontSize: "20px" }}
                 >
                   {v.title}
                 </h3>
@@ -82,7 +82,7 @@ export function VideoReel() {
       </div>
 
       <style>{`
-        section h2 { font-size: clamp(38px, 5vw, 64px); color: var(--color-ivory); }
+        section h2 { font-size: clamp(38px, 5vw, 64px); color: var(--color-ink); }
       `}</style>
 
       {active && (

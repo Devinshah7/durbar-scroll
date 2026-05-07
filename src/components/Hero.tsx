@@ -76,25 +76,25 @@ export function Hero() {
                 EST. 2015 · 350+ EVENTS · ACROSS 11 COUNTRIES
               </div>
               <h1
-                className="font-serif-display leading-[0.95]"
+                className="font-serif-display leading-[1.05]"
                 style={{ fontSize: "clamp(48px, 7.5vw, 88px)", color: "var(--color-ivory)", fontWeight: 600, letterSpacing: "-0.02em" }}
               >
                 <span className="block">We don't organise</span>
-                <span className="block" style={{ overflow: "hidden", display: "inline-block" }}>
-                  <span ref={morphRef} className="inline-block font-serif-display" style={{ color: "var(--color-gold)", transformOrigin: "center bottom" }}>
-                    experiences.
+                <span className="block">
+                  We create{" "}
+                  <span style={{ overflow: "hidden", display: "inline-block", verticalAlign: "bottom" }}>
+                    <span ref={morphRef} className="inline-block font-serif-display" style={{ color: "var(--color-gold)", transformOrigin: "center bottom" }}>
+                      experiences.
+                    </span>
                   </span>
                 </span>
               </h1>
               <p className="mt-8 max-w-xl text-[16px] leading-[1.7] md:text-[18px]" style={{ color: "rgba(253,246,227,0.78)" }}>
                 India's most trusted experiential partner — 350+ events, 20+ years of expertise, across 11 countries. MICE events, sports, weddings, and celebrity concerts.
               </p>
-              <div className="pointer-events-auto mt-10 flex flex-wrap items-center gap-4">
+              <div className="pointer-events-auto mt-10">
                 <a href="#gallery" className="btn-gold">
                   Explore Our World
-                </a>
-                <a href="#video" className="btn-outline-gold !py-3.5 !px-6 rounded-full">
-                  Watch Our Story
                 </a>
               </div>
             </div>

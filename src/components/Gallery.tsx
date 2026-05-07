@@ -47,7 +47,7 @@ export function Gallery() {
     <section
       id="gallery"
       className="relative py-24 md:py-32"
-      style={{ background: "linear-gradient(180deg, var(--section-maroon) 0%, var(--section-cream) 12%, var(--section-light) 100%)" }}
+      style={{ background: "linear-gradient(180deg, var(--section-cream) 0%, var(--section-light) 20%, var(--section-light) 100%)" }}
     >
       <div className="mx-auto max-w-[1500px] px-6 md:px-10">
         <div className="mb-18 max-w-3xl">
