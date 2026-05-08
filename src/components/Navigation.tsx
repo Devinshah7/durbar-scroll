@@ -2,22 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Logo } from "@/components/Logo";
 import { Link } from "@tanstack/react-router";
+import { ChevronUp } from "lucide-react";
 
 const leftLinks = [
   { label: "Home", href: "/gates", isRoute: true },
   { label: "About", href: "#philosophy", isRoute: false },
+  { label: "Services", href: "#pillars", isRoute: false },
 ];
 
 const rightLinks = [
   { label: "Team", href: "#team", isRoute: false },
   { label: "Connect", href: "#contact", isRoute: false },
   { label: "Journal", href: "/blogs", isRoute: true },
-];
-
-const dropdownItems = [
-  { label: "TMB Events", href: "#pillars", comingSoon: false },
-  { label: "TMB Tourism", href: null, comingSoon: true, pillar: "Tourism" },
-  { label: "TMB Celebrities", href: null, comingSoon: true, pillar: "Celebrities" },
 ];
 
 interface NavigationProps {
@@ -30,12 +26,15 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
   const [open, setOpen] = useState(false);
   const introPlayed = typeof window !== "undefined" && sessionStorage.getItem("eventsIntroPlayed") === "true";
   const [revealDone, setRevealDone] = useState(!logoReveal || introPlayed);
-  const [dropdown, setDropdown] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const logoRef = useRef<HTMLDivElement>(null);
   const overlayLogoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      setShowScrollTop(window.scrollY > 400);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -51,23 +50,36 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
     tl.to(overlay, { opacity: 0, scale: 0.4, y: -window.innerHeight * 0.4, duration: 0.7, ease: "power3.inOut" });
   }, [logoReveal, revealDone]);
 
-  const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNav = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
     e.preventDefault();
     setOpen(false);
-    setDropdown(false);
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const handleDropdownClick = (item: typeof dropdownItems[0], e: React.MouseEvent) => {
-    e.preventDefault();
-    setDropdown(false);
-    if (item.comingSoon && onComingSoon && item.pillar) {
-      onComingSoon(item.pillar);
-    } else if (item.href) {
-      const el = document.querySelector(item.href);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const NavLink = ({ label, href, isRoute }: { label: string; href: string; isRoute: boolean }) => {
+    const cls = "group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors";
+    const underline = (
+      <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
+    );
+    if (isRoute) {
+      return (
+        <Link to={href as any} className={cls} style={{ color: "var(--color-gold-pale)" }}>
+          {label}
+          {underline}
+        </Link>
+      );
     }
+    return (
+      <a href={href} onClick={(e) => handleNav(e, href)} className={cls} style={{ color: "var(--color-gold-pale)" }}>
+        {label}
+        {underline}
+      </a>
+    );
   };
 
   return (
@@ -100,43 +112,11 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
         }}
       >
         <div className="mx-auto grid max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center px-6 md:px-10">
-          {/* Left nav */}
+          {/* Left nav — 3 links */}
           <nav className="hidden items-center gap-7 md:flex">
-            {leftLinks.map((l) =>
-              l.isRoute ? (
-                <Link key={l.label} to={l.href as any} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
-                  {l.label}
-                  <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
-                </Link>
-              ) : (
-                <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
-                  {l.label}
-                  <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
-                </a>
-              )
-            )}
-            {/* Services dropdown */}
-            <div className="relative" onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
-              <button className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
-                Services ▾
-              </button>
-              {dropdown && (
-                <div className="absolute left-0 top-full mt-2 w-48 rounded-lg py-2" style={{ background: "rgba(13,11,8,0.95)", backdropFilter: "blur(12px)", border: "1px solid rgba(200,150,12,0.3)" }}>
-                  {dropdownItems.map((item) => (
-                    <a
-                      key={item.label}
-                      href="#"
-                      onClick={(e) => handleDropdownClick(item, e)}
-                      className="flex items-center gap-2 px-4 py-2.5 text-[11px] uppercase tracking-[0.2em] transition-colors hover:bg-[rgba(200,150,12,0.1)]"
-                      style={{ color: item.comingSoon ? "rgba(253,246,227,0.5)" : "var(--color-gold-pale)" }}
-                    >
-                      {item.label}
-                      {item.comingSoon && <span className="text-[8px] rounded border px-1.5 py-0.5" style={{ borderColor: "rgba(200,150,12,0.3)", color: "var(--color-gold)" }}>Soon</span>}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
+            {leftLinks.map((l) => (
+              <NavLink key={l.label} {...l} />
+            ))}
           </nav>
 
           {/* Center logo */}
@@ -146,27 +126,13 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
             </a>
           </div>
 
-          {/* Right nav */}
+          {/* Right nav — 3 links */}
           <div className="flex items-center justify-end gap-7">
             <nav className="hidden items-center gap-7 md:flex">
-              {rightLinks.map((l) =>
-                l.isRoute ? (
-                  <Link key={l.label} to={l.href as any} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
-                    {l.label}
-                    <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
-                  </Link>
-                ) : (
-                  <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="group relative text-[11px] font-medium uppercase tracking-[0.3em] transition-colors" style={{ color: "var(--color-gold-pale)" }}>
-                    {l.label}
-                    <span className="absolute -bottom-2 left-0 h-px w-0 transition-all duration-300 group-hover:w-full" style={{ background: "var(--color-gold)" }} />
-                  </a>
-                )
-              )}
+              {rightLinks.map((l) => (
+                <NavLink key={l.label} {...l} />
+              ))}
             </nav>
-
-            <a href="#contact" onClick={(e) => handleNav(e, "#contact")} className="hidden md:inline-flex btn-outline-gold !py-2.5 !px-5 !text-[10px] rounded-full">
-              Begin Your Experience
-            </a>
 
             <button aria-label="Open menu" onClick={() => setOpen((v) => !v)} className="flex flex-col gap-[5px] p-2 md:hidden">
               <span className={`block h-px w-7 transition-all ${open ? "translate-y-[6px] rotate-45" : ""}`} style={{ background: "var(--color-gold)" }} />
@@ -182,27 +148,36 @@ export function Navigation({ logoReveal = false, onComingSoon }: NavigationProps
         className={`fixed inset-0 z-[999] flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
         style={{ background: "var(--section-maroon)" }}
       >
-        {[...leftLinks, { label: "Services", href: "#pillars", isRoute: false }, ...rightLinks].map((l, i) =>
+        {[...leftLinks, ...rightLinks].map((l, i) =>
           l.isRoute ? (
             <Link key={l.label} to={l.href as any} onClick={() => setOpen(false)} className="font-display text-4xl italic"
               style={{ color: "var(--color-gold-pale)", transform: open ? "translateX(0)" : "translateX(-30px)", opacity: open ? 1 : 0, transition: `all 0.4s ease ${i * 0.07 + 0.1}s` }}>
               {l.label}
             </Link>
           ) : (
-            <a key={l.href} href={l.href} onClick={(e) => handleNav(e, l.href)} className="font-display text-4xl italic"
+            <a key={l.label} href={l.href} onClick={(e) => handleNav(e, l.href)} className="font-display text-4xl italic"
               style={{ color: "var(--color-gold-pale)", transform: open ? "translateX(0)" : "translateX(-30px)", opacity: open ? 1 : 0, transition: `all 0.4s ease ${i * 0.07 + 0.1}s` }}>
               {l.label}
             </a>
           )
         )}
-        {/* Mobile coming soon links */}
-        <button onClick={() => { setOpen(false); onComingSoon?.("Tourism"); }} className="font-display text-2xl italic" style={{ color: "rgba(253,246,227,0.4)" }}>
-          Tourism <span className="text-sm">(Coming Soon)</span>
-        </button>
-        <button onClick={() => { setOpen(false); onComingSoon?.("Celebrities"); }} className="font-display text-2xl italic" style={{ color: "rgba(253,246,227,0.4)" }}>
-          Celebrities <span className="text-sm">(Coming Soon)</span>
-        </button>
       </div>
+
+      {/* Scroll to top button */}
+      <button
+        aria-label="Scroll to top"
+        onClick={scrollToTop}
+        className={`fixed bottom-6 right-6 z-[1001] flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 ${showScrollTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}`}
+        style={{
+          background: "rgba(13, 11, 8, 0.85)",
+          borderColor: "rgba(200, 150, 12, 0.4)",
+          backdropFilter: "blur(8px)",
+          color: "var(--color-gold)",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
+        }}
+      >
+        <ChevronUp size={18} />
+      </button>
     </>
   );
 }
