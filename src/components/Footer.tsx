@@ -29,7 +29,7 @@ export function Footer() {
 
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 pb-12 md:grid-cols-3 md:px-10">
           <div>
-            <Logo height={56} glow />
+            <Logo height={80} />
             <p className="mt-6 max-w-xs font-display italic" style={{ color: "var(--color-gold-pale)", fontSize: "18px" }}>
               A Blend of Culture through Events & Tourism.
             </p>
@@ -47,8 +47,10 @@ export function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border text-[11px] transition-all hover:bg-[var(--color-gold)] hover:text-[var(--color-ink)]"
-                  style={{ borderColor: "rgba(200,150,12,0.5)", color: "var(--color-gold)" }}
+                  className="flex h-9 w-9 items-center justify-center rounded-md text-[11px] font-semibold transition-all"
+                  style={{ background: "#D4AF37", color: "#0B0608", border: "1px solid #8b6914" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#B8860B"; (e.currentTarget as HTMLElement).style.boxShadow = "0 0 14px rgba(212,175,55,0.6)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#D4AF37"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
                 >
                   {s.label}
                 </a>
