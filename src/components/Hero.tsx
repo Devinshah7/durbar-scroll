@@ -42,29 +42,70 @@ export function Hero() {
       id="top"
       ref={heroRef}
       className="relative min-h-screen w-full overflow-hidden"
-      style={{ background: "var(--section-dark)" }}
+      style={{ background: "radial-gradient(ellipse at center, #2A0A0E 0%, #170609 60%, #0B0608 100%)" }}
     >
       <div className="relative flex h-[88vh] min-h-[640px] w-full">
-        {/* LEFT */}
-        <div className="relative h-full w-[40%] overflow-hidden" style={{ background: "linear-gradient(to bottom, var(--color-maroon-deep), var(--section-dark))" }}>
-          <img src={heroLeft} alt="A ceremonial Indian gathering bathed in chandelier light" className="absolute inset-0 h-full w-full object-cover opacity-90" width={704} height={1280} />
+        {/* Cinematic unified backdrop — maroon/gold duotone */}
+        <div className="relative h-full w-full overflow-hidden">
+          <img
+            src={heroRight}
+            alt="A ceremonial Indian gathering bathed in chandelier light"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ filter: "grayscale(0.4) contrast(1.05) brightness(0.55)", opacity: 0.55 }}
+            width={1280}
+            height={720}
+          />
+          {/* Maroon → gold duotone overlay */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(90,16,24,0.85) 0%, rgba(23,6,9,0.7) 50%, rgba(201,160,60,0.18) 100%)",
+              mixBlendMode: "multiply",
+            }}
+          />
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at 30% 50%, transparent 0%, rgba(11,6,8,0.65) 80%)",
+            }}
+          />
+          {/* Faint mandala behind headline */}
+          <svg
+            aria-hidden
+            viewBox="0 0 400 400"
+            className="pointer-events-none absolute"
+            style={{ left: "8%", top: "50%", transform: "translateY(-50%)", width: "min(60vw, 640px)", height: "auto", opacity: 0.12 }}
+          >
+            <g fill="none" stroke="#D4AF37" strokeWidth="0.8">
+              <circle cx="200" cy="200" r="60" />
+              <circle cx="200" cy="200" r="100" />
+              <circle cx="200" cy="200" r="150" />
+              <circle cx="200" cy="200" r="190" />
+              {Array.from({ length: 16 }).map((_, i) => {
+                const a = (i / 16) * Math.PI * 2;
+                return (
+                  <line
+                    key={i}
+                    x1={200 + Math.cos(a) * 60}
+                    y1={200 + Math.sin(a) * 60}
+                    x2={200 + Math.cos(a) * 190}
+                    y2={200 + Math.sin(a) * 190}
+                  />
+                );
+              })}
+            </g>
+          </svg>
+          {/* Drifting paisleys */}
           <div className="pointer-events-none absolute inset-0">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <svg key={i} viewBox="0 0 40 60" className="absolute h-16 w-16" style={{ left: `${15 + i * 15}%`, bottom: "-60px", color: "var(--color-gold)", opacity: 0.18, animation: `paisley-float ${10 + i * 2}s ease-out ${i * 1.5}s infinite` }}>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <svg key={i} viewBox="0 0 40 60" className="absolute h-16 w-16" style={{ left: `${10 + i * 14}%`, bottom: "-60px", color: "#D4AF37", opacity: 0.16, animation: `paisley-float ${10 + i * 2}s ease-out ${i * 1.5}s infinite` }}>
                 <path d="M20 5 C 8 18, 8 38, 20 55 C 28 40, 30 28, 26 18 C 24 12, 22 8, 20 5 Z" fill="none" stroke="currentColor" strokeWidth="0.8" />
               </svg>
             ))}
           </div>
-          <div className="pointer-events-none absolute inset-0" style={{ boxShadow: "inset -60px 0 80px rgba(200,150,12,0.1)" }} />
-          <Diyas count={5} />
-        </div>
-
-        {/* RIGHT */}
-        <div className="relative h-full w-[60%] overflow-hidden" style={{ background: "linear-gradient(to bottom, var(--color-charcoal), var(--section-dark))" }}>
-          <img src={heroRight} alt="A grand corporate event stage" className="absolute inset-0 h-full w-full object-cover opacity-85" width={1280} height={720} />
-          <div className="pointer-events-none absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(200,150,12,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(200,150,12,0.05) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
-          <div className="pointer-events-none absolute inset-0" style={{ boxShadow: "inset 60px 0 80px rgba(200,150,12,0.1)" }} />
-          <Diyas count={7} />
+          <Diyas count={9} />
         </div>
 
         {/* Hero overlay text */}
