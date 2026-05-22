@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Diyas } from "@/lib/diyas";
-import heroLeft from "@/assets/hero-left.jpg";
 import heroRight from "@/assets/hero-right.jpg";
 
 const MORPH_WORDS = ["experiences.", "ceremonies.", "stories.", "moments.", "journeys."];
