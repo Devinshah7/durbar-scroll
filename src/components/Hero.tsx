@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Diyas } from "@/lib/diyas";
+import heroLeft from "@/assets/hero-left.jpg";
 import heroRight from "@/assets/hero-right.jpg";
 
 const MORPH_WORDS = ["experiences.", "ceremonies.", "stories.", "moments.", "journeys."];
@@ -44,68 +45,55 @@ export function Hero() {
       style={{ background: "radial-gradient(ellipse at center, #2A0A0E 0%, #170609 60%, #0B0608 100%)" }}
     >
       <div className="relative flex h-[88vh] min-h-[640px] w-full">
-        {/* Cinematic unified backdrop — maroon/gold duotone */}
-        <div className="relative h-full w-full overflow-hidden">
+        {/* LEFT — original warm portrait */}
+        <div className="relative h-full w-1/2 overflow-hidden">
+          <img
+            src={heroLeft}
+            alt="A ceremonial Indian portrait bathed in warm light"
+            className="absolute inset-0 h-full w-full object-cover"
+            width={1280}
+            height={1440}
+          />
+          {/* Subtle edge vignette only — keep photo intact */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(11,6,8,0.55) 100%)",
+            }}
+          />
+          <Diyas count={6} />
+        </div>
+
+        {/* RIGHT — original blue concert stage */}
+        <div className="relative h-full w-1/2 overflow-hidden">
           <img
             src={heroRight}
-            alt="A ceremonial Indian gathering bathed in chandelier light"
+            alt="A grand concert stage bathed in cinematic blue light"
             className="absolute inset-0 h-full w-full object-cover"
-            style={{ filter: "grayscale(0.4) contrast(1.05) brightness(0.55)", opacity: 0.55 }}
             width={1280}
-            height={720}
-          />
-          {/* Maroon → gold duotone overlay */}
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(90,16,24,0.85) 0%, rgba(23,6,9,0.7) 50%, rgba(201,160,60,0.18) 100%)",
-              mixBlendMode: "multiply",
-            }}
+            height={1440}
           />
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse at 30% 50%, transparent 0%, rgba(11,6,8,0.65) 80%)",
+                "radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(11,6,8,0.55) 100%)",
             }}
           />
-          {/* Faint mandala behind headline */}
-          <svg
-            aria-hidden
-            viewBox="0 0 400 400"
-            className="pointer-events-none absolute"
-            style={{ left: "8%", top: "50%", transform: "translateY(-50%)", width: "min(60vw, 640px)", height: "auto", opacity: 0.12 }}
-          >
-            <g fill="none" stroke="#D4AF37" strokeWidth="0.8">
-              <circle cx="200" cy="200" r="60" />
-              <circle cx="200" cy="200" r="100" />
-              <circle cx="200" cy="200" r="150" />
-              <circle cx="200" cy="200" r="190" />
-              {Array.from({ length: 16 }).map((_, i) => {
-                const a = (i / 16) * Math.PI * 2;
-                return (
-                  <line
-                    key={i}
-                    x1={200 + Math.cos(a) * 60}
-                    y1={200 + Math.sin(a) * 60}
-                    x2={200 + Math.cos(a) * 190}
-                    y2={200 + Math.sin(a) * 190}
-                  />
-                );
-              })}
-            </g>
-          </svg>
-          {/* Drifting paisleys */}
-          <div className="pointer-events-none absolute inset-0">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <svg key={i} viewBox="0 0 40 60" className="absolute h-16 w-16" style={{ left: `${10 + i * 14}%`, bottom: "-60px", color: "#D4AF37", opacity: 0.16, animation: `paisley-float ${10 + i * 2}s ease-out ${i * 1.5}s infinite` }}>
-                <path d="M20 5 C 8 18, 8 38, 20 55 C 28 40, 30 28, 26 18 C 24 12, 22 8, 20 5 Z" fill="none" stroke="currentColor" strokeWidth="0.8" />
-              </svg>
-            ))}
-          </div>
-          <Diyas count={9} />
+          <Diyas count={6} />
         </div>
+
+        {/* Center seam gold thread */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2"
+          style={{
+            background:
+              "linear-gradient(180deg, transparent 0%, rgba(212,175,55,0.55) 50%, transparent 100%)",
+          }}
+        />
+
 
         {/* Hero overlay text */}
         <div className="pointer-events-none absolute inset-0 flex items-center">
