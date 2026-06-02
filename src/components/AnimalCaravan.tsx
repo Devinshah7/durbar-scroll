@@ -422,7 +422,7 @@ export function AnimalCaravan() {
           <p className="eyebrow mb-3" style={{ color: "var(--color-terracotta)" }}>A Royal Procession of Trusted Partnerships</p>
           <h2
             className="section-heading font-serif-display"
-            style={{ color: "var(--color-ink)", fontSize: "clamp(28px, 4vw, 44px)" }}
+            style={{ color: "var(--color-ink)" }}
           >
             Brands That Have Travelled With Us
           </h2>
