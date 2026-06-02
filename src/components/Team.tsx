@@ -104,7 +104,7 @@ export function Team() {
               <div className="absolute right-3 top-3" style={{ color: "var(--color-gold)", opacity: 0.3, fontSize: 20, transform: "scaleX(-1)" }}>❧</div>
 
               <div className="relative h-[200px] w-[200px] overflow-hidden rounded-full" style={{ border: "3px solid var(--color-gold)", boxShadow: "0 0 40px rgba(200,150,12,0.25), 0 0 0 6px rgba(200,150,12,0.1)" }}>
-                <img src={m.img} alt={m.name} className="h-full w-full object-cover" />
+                <img src={m.img} alt={m.name} className="h-full w-full object-cover" style={{ objectPosition: "center 25%" }} />
               </div>
               <h3 className="mt-6 font-serif-display" style={{ color: "var(--color-gold)", fontSize: "28px" }}>{m.name}</h3>
               <div className="mt-1 font-display italic" style={{ color: "var(--color-gold-pale)", fontSize: "16px" }}>{m.role}</div>
