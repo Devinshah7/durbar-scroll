@@ -433,7 +433,7 @@ export function AnimalCaravan() {
       </div>
 
       {/* Animal procession marquee */}
-      <div className="caravan-marquee mt-10 overflow-hidden" style={{ height: "140px" }}>
+      <div className="caravan-marquee mt-10 overflow-hidden" style={{ paddingTop: "12px", paddingBottom: "18px" }}>
         <div className="caravan-track flex items-end gap-10 px-6">
           {cards}
           {cards}
@@ -449,7 +449,7 @@ export function AnimalCaravan() {
       <style>{`
         .caravan-track {
           width: max-content;
-          animation: caravan-scroll 60s linear infinite;
+          animation: caravan-scroll 60s linear infinite reverse;
         }
         .caravan-marquee:hover .caravan-track {
           animation-play-state: paused;
