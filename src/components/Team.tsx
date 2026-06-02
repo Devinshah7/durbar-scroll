@@ -2,9 +2,13 @@ import { useEffect, useMemo, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitWords } from "@/lib/reveal";
-import t1 from "@/assets/team-1.jpg";
-import t2 from "@/assets/team-2.jpg";
-import t3 from "@/assets/team-3.jpg";
+import priyanaAsset from "@/assets/priyana.jpg.asset.json";
+import asheeshAsset from "@/assets/asheesh.jpg.asset.json";
+import shikhaAsset from "@/assets/shikha.jpg.asset.json";
+
+const t1 = priyanaAsset.url;
+const t2 = asheeshAsset.url;
+const t3 = shikhaAsset.url;
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
