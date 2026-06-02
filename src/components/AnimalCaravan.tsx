@@ -422,7 +422,7 @@ export function AnimalCaravan() {
           <p className="eyebrow mb-3" style={{ color: "var(--color-terracotta)" }}>A Royal Procession of Trusted Partnerships</p>
           <h2
             className="section-heading font-serif-display"
-            style={{ color: "var(--color-ink)", fontSize: "clamp(28px, 4vw, 44px)" }}
+            style={{ color: "var(--color-ink)" }}
           >
             Brands That Have Travelled With Us
           </h2>
@@ -433,7 +433,7 @@ export function AnimalCaravan() {
       </div>
 
       {/* Animal procession marquee */}
-      <div className="caravan-marquee mt-10 overflow-hidden" style={{ height: "140px" }}>
+      <div className="caravan-marquee mt-10 overflow-hidden" style={{ paddingTop: "12px", paddingBottom: "18px" }}>
         <div className="caravan-track flex items-end gap-10 px-6">
           {cards}
           {cards}
@@ -449,7 +449,7 @@ export function AnimalCaravan() {
       <style>{`
         .caravan-track {
           width: max-content;
-          animation: caravan-scroll 60s linear infinite;
+          animation: caravan-scroll 60s linear infinite reverse;
         }
         .caravan-marquee:hover .caravan-track {
           animation-play-state: paused;
