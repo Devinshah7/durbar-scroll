@@ -119,7 +119,7 @@ export function Team() {
       </div>
 
       <style>{`
-        #team h2 { font-size: clamp(40px, 5.5vw, 56px); color: var(--color-gold); }
+        #team h2 { color: var(--color-gold); }
       `}</style>
     </section>
   );
